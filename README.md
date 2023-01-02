@@ -1,69 +1,67 @@
-# portfolio
+<p align="center">
+    <img src="./logo.png" width="175"> 
+</p>
+<h1 align="center">Meu Portfolio</h1>
+<description>
+Projeto em desenvolvimento, porém não contínuo, passará por diversas alterações.<br>
+<a href="https://www.figma.com/file/tBHrIuL4AcTC30Sxudh5kj/Portif%C3%B3lio?node-id=0%3A1&t=bBRpQMlEbnAVWRRh-1">Design</a>  
 
-## Build Setup
 
-```bash
-# install dependencies
-$ npm install
+</description>
+<p style="color:#404040;" align="end">Release 0</p>
+<hr>
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+# Sumário
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+- [Comandos](#install)
+    - [Install](#install)
+    - [build](#build)
+- [Tecnologias utilizadas](#tecnologias)
+  <!-- [License](#license) -->
 
-# generate static project
-$ npm run generate
+<hr>
+<div id="install"></div>
+
+# Comandos
+
+Para iniciar o programa:
+
+```node
+    npm install
+    npm run serve
+```
+<div id="build"></div>
+
+### Compiles and minifies for production
+```
+npm run build
 ```
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+### Lints and fixes files
+```
+npm run lint
+```
 
-## Special Directories
+<hr>
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+### Feedbacks
 
-### `assets`
+Quanto mais comentários, melhor! Estamos sempre à procura de mais sugestões e opiniões sobre as discussões. Essa é uma boa oportunidade para influenciar a direção futura deste projeto.
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+Isso inclui enviar uma sugestão, incluindo recursos completamente novos e pequenas melhorias nas funcionalidades existentes.
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
+rótulos são um bom lugar para encontrar discussões em andamento.
 
-### `components`
+---
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
+### 🛠 Tecnologias
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
+<div id="tecnologias"></div>
+As seguintes ferramentas foram usadas na construção do projeto:
+<br><br>
 
-### `layouts`
+- [Node](https://nodejs.org/en/)
+    - [Vue](https://vuejs.org/)
+        - [Axios](https://axios-http.com/ptbr/docs/intro)
 
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+See [Configuration Reference](https://cli.vuejs.org/config/).
