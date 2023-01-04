@@ -1,18 +1,20 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <button @click="changePageLanguage">mudar linguagem padrão pra portugues brasileiro</button>
+  <topBar/>
   <router-view/>
 </template>
 
 <script>
+import topBar from "./components/TopBar.vue";
 export default {
-data(){return{userPreferedLanguage:'',}},
+data(){
+  return{
+    userPreferedLanguage:'',
+  }},
 created() {
     this.checkLanguages()
-   
+},
+components: {
+  topBar
 },
 methods:{
   checkLanguages(){
@@ -24,13 +26,12 @@ methods:{
 
     console.log(' Preferência de linguagem usuário - LocalStorage: '+this.userPreferedLanguage)
   },
-  changePageLanguage(){
-    localStorage.setItem('userLanguage', 'pt-BR')
-  }
 }
 }
 </script>
 <style lang="scss">
+*{margin:0;padding:0;box-sizing:border-box;}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
