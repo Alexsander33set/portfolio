@@ -1,5 +1,19 @@
 <template>
-  <topBar/>
+  <div class="navbar">
+    <button v-html="showSiteLanguage()"></button>
+    <button @click="changeLanguage('en-US')">mudar linguagem padrão pra Inglês</button>
+    <div class="navbarRight">
+      <select name="" id="">
+        <option v-for="language in this.supportedLanguages" :key="language">{{language}}</option>
+      </select>
+      <nav>
+        <router-link to="/">Página Inicial</router-link> |
+        <router-link to="/about">Sobre</router-link>
+      </nav>
+    </div>
+    
+  </div>
+  <topBar @changeLanguage="changeLanguage"/>
   <router-view/>
 </template>
 
@@ -9,6 +23,7 @@ export default {
 data(){
   return{
     userPreferedLanguage:'',
+    supportedLanguages:['pt-BR','en-US'],
   }},
 created() {
     this.checkLanguages()
@@ -23,10 +38,20 @@ methods:{
       localStorage.setItem('userLanguage', navigator.language)
     }
     this.userPreferedLanguage = localStorage.getItem('userLanguage')
-
-    console.log(' Preferência de linguagem usuário - LocalStorage: '+this.userPreferedLanguage)
+    /*|||||||||||||||||||*/console.log(' Preferência de linguagem usuário - LocalStorage: '+this.userPreferedLanguage)
   },
-}
+  showSiteLanguage(){
+    if (!this.userPreferedLanguage){
+      return 'vazio'
+    }
+    else return this.userPreferedLanguage
+  },
+  changeLanguage(selectedLanguage){
+      this.userPreferedLanguage = selectedLanguage
+      localStorage.setItem('userLanguage', selectedLanguage)
+      //Mudou linguagem no localStorage e setou o language global para pegar de lá
+  },
+},
 }
 </script>
 <style lang="scss">
@@ -68,4 +93,35 @@ button{
     outline-offset: 2px;
   }
 }
+
+/*---------------------------------*/
+.navbar{
+  background: rgba(163, 250, 151, 0.247);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  .navbarRight{
+    display:flex;
+    align-items: center;
+  }
+}
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+/*---------------------------------*/
+
+
+
 </style>
