@@ -1,19 +1,9 @@
 <template>
-  <div class="navbar">
-    <button v-html="showSiteLanguage()"></button>
-    <button @click="changeLanguage('en-US')">mudar linguagem padrão pra Inglês</button>
-    <div class="navbarRight">
-      <select name="" id="">
-        <option v-for="language in this.supportedLanguages" :key="language">{{language}}</option>
-      </select>
-      <nav>
-        <router-link to="/">Página Inicial</router-link> |
-        <router-link to="/about">Sobre</router-link>
-      </nav>
-    </div>
-    
-  </div>
-  <topBar @changeLanguage="changeLanguage"/>
+  <topBar 
+    :preferedLanguage="this.PreferedLanguage"
+    :supportedLanguages="this.supportedLanguages"
+    :languageSelected="this.languageSelected"
+    @onLog="onLogi" />
   <router-view/>
 </template>
 
@@ -22,8 +12,11 @@ import topBar from "./components/TopBar.vue";
 export default {
 data(){
   return{
-    userPreferedLanguage:'',
-    supportedLanguages:['pt-BR','en-US'],
+    PreferedLanguage:'',
+    supportedLanguages:[
+      {name:'Português Brasil',code:'pt-BR'},
+      {name:'English',code:'en-US'}
+    ],
   }},
 created() {
     this.checkLanguages()
@@ -37,20 +30,12 @@ methods:{
     if(!localStorage.getItem('userLanguage')){
       localStorage.setItem('userLanguage', navigator.language)
     }
-    this.userPreferedLanguage = localStorage.getItem('userLanguage')
-    /*|||||||||||||||||||*/console.log(' Preferência de linguagem usuário - LocalStorage: '+this.userPreferedLanguage)
+    this.PreferedLanguage = localStorage.getItem('userLanguage')
+    /*|||||||||||||||||||*/console.log(' Preferência de linguagem usuário - LocalStorage: '+this.PreferedLanguage)
   },
-  showSiteLanguage(){
-    if (!this.userPreferedLanguage){
-      return 'vazio'
-    }
-    else return this.userPreferedLanguage
-  },
-  changeLanguage(selectedLanguage){
-      this.userPreferedLanguage = selectedLanguage
-      localStorage.setItem('userLanguage', selectedLanguage)
-      //Mudou linguagem no localStorage e setou o language global para pegar de lá
-  },
+  onLogi(){
+    console.log('logado do filho')
+  }
 },
 }
 </script>
