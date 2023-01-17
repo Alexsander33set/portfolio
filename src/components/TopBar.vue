@@ -3,7 +3,9 @@
   <div class="navbar">
     <button v-html="showSiteLanguage()"></button>
     <div class="navbarRight">
-      <select name="" id="" v-model="this.PreferedLanguage">
+      <select name="" id="" 
+        v-model="this.languageSelected"
+        @change="$emit('onLog')">
         <option 
           v-for="language in this.supportedLanguages" 
           :key="language" :value="language.code">
@@ -17,13 +19,6 @@
     </div>
     
   </div>
-  
-  
-  
-  
-  
-  
-  
   
   
   Topbar Component

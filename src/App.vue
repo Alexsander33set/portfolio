@@ -2,7 +2,6 @@
   <topBar 
     :preferedLanguage="this.PreferedLanguage"
     :supportedLanguages="this.supportedLanguages"
-    :languageSelected="this.languageSelected"
     @onLog="onLogi" />
   <router-view/>
 </template>

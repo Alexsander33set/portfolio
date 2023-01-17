@@ -20,11 +20,15 @@ Projeto em desenvolvimento, porém não contínuo, passará por diversas altera�
   <!-- [License](#license) -->
 
 <hr>
+
+#### App Design - [Figma](https://www.figma.com/file/tBHrIuL4AcTC30Sxudh5kj/Portif%C3%B3lio?node-id=0%3A1&t=H7e14Qccoad6Sjg8-1)
+#### App architecture - [Lucidchart](https://lucid.app/lucidchart/fde5b0dc-29ae-4c47-bd7c-64e211760cb7/edit?viewport_loc=-143%2C-212%2C2219%2C1055%2C0_0&invitationId=inv_571a1975-17aa-4fc7-8a3a-831a045beee6)
+<Hr>
 <div id="install"></div>
 
 # Comandos
 
-Para iniciar o programa:
+To run the application:
 
 ```node
     npm install
