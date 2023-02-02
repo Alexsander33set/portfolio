@@ -32,13 +32,7 @@ export default {
       .addEventListener("change", (event) => {
         this.preferedTheme = event.matches ? "dark" : "light";
       });
-      console.log(process.env)
   },
-  mounted() {
-      let recaptchaScript = document.createElement('script')
-      recaptchaScript.setAttribute('src', 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4608131955762627')
-      document.head.appendChild(recaptchaScript)
-    },
   components: {
     topBar,
   },
