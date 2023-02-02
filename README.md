@@ -65,7 +65,10 @@ As seguintes ferramentas foram usadas na construção do projeto:
 <br><br>
 
 - [Node](https://nodejs.org/en/)
-    - [Vue](https://vuejs.org/)
-        - [Axios](https://axios-http.com/ptbr/docs/intro)
+  - [Vue](https://vuejs.org/)
+    - [Axios](https://axios-http.com/ptbr/docs/intro)
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Credits
+
+-[ISO 3166 country codes](https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes)
