@@ -17,7 +17,7 @@
     <div><button @click="getWeather()">try get API Weather</button></div>
     <br /><hr /><br />
     <button @click="getCity()">Location</button>
-    <input type="text" disabled="true" v-model="geoCity" />
+    <input type="text" disabled="true" v-model="geocityLocation"/>
   </div>
 </template>
 <script>
@@ -32,6 +32,7 @@ export default {
       lat: "",
       lon: "",
       geoCity: "",
+      geocityLocation:'',
     };
   },
   created() {
@@ -112,6 +113,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.geoCity = response.data;
+          this.geocityLocation = response.data[0].name +', ' + response.data[0].state
         });
     },
   },
