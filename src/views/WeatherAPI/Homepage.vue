@@ -18,6 +18,8 @@
     <br /><hr /><br />
     <button @click="getCity()">Location</button>
     <input type="text" disabled="true" v-model="geocityLocation"/>
+    <br /><hr /><br />
+    <iframe src="https://datahub.io/core/country-list/r/0.html" width="100%" height="100%" frameborder="0"></iframe>
   </div>
 </template>
 <script>
@@ -101,6 +103,12 @@ export default {
         });
     },
     getCity() {
+      console.log("http://api.openweathermap.org/geo/1.0/reverse?lat=" +
+            this.lat +
+            "&lon=" +
+            this.lon +
+            "&limit=1&appid=" +
+            process.env.VUE_APP_API_KEY)
       axios
         .get(
           "http://api.openweathermap.org/geo/1.0/reverse?lat=" +

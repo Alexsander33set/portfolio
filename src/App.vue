@@ -1,4 +1,4 @@
-<template >
+<template style="background:red;">
   <topBar 
     :preferedLanguage="this.preferedLanguage"
     :supportedLanguages="this.supportedLanguages"
@@ -73,18 +73,39 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  min-height: 100dvh;
 }
-
-nav.dark{
-  background: #121212;
+@media (prefers-color-scheme: dark)
+{
+  #app {
+    background: #1e2124;
+    color: white;
+  }
+  nav{
+    a{color:#6f85d2;}
+  }
 }
+@media (prefers-color-scheme: light)
+{
+  #app {
+    background: #E3E3E3;
+    color: #121212;
+  }
+  nav {
+  a {
+    color:#2c3e50;
 
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+}
 nav {
   padding: 30px;
 
   a {
     font-weight: bold;
-    color: #2c3e50;
 
     &.router-link-exact-active {
       color: #42b983;
