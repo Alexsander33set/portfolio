@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mainBody">
     something
     <input type="text" placeholder="Nome da Cidade" v-model="userInputs.city" />
     <input
@@ -18,8 +18,12 @@
     <br /><hr /><br />
     <button @click="getCity()">Location</button>
     <input type="text" disabled="true" v-model="geocityLocation"/>
-    <br /><hr /><br />
-    <iframe src="https://datahub.io/core/country-list/r/0.html" width="100%" height="100%" frameborder="0"></iframe>
+    <br><hr/><br>
+    <div class="weatherInfo">
+      <h1>getAPIData</h1><br>
+
+      <h5>Location: <p>{{ this.bruteWeatherData.name}} - Longitude: {{this.bruteWeatherData.coords.lon}} | Latitude: {{this.bruteWeatherData.coords.lat}}</p></h5> 
+    </div>
   </div>
 </template>
 <script>
@@ -29,10 +33,11 @@ export default {
   data() {
     return {
       apiKey: process.env.VUE_APP_API_KEY,
+      userWeatherPreferences:{metricUnit:'',},
+      bruteWeatherData:'',
       userInputs: { city: "", stateCode: "", countryCode: "" },
       limit: "",
-      lat: "",
-      lon: "",
+      lat: "",lon: "",
       geoCity: "",
       geocityLocation:'',
     };
@@ -41,6 +46,7 @@ export default {
     this.getGeolocatization();
   },
   methods: {
+    showUserPreference(){console.log(this.preferedLanguage)},
     getGeolocatization() {
       const successCallback = (position) => {
         console.log(position);
@@ -56,30 +62,15 @@ export default {
     getCoordinates() {
       //https://openweathermap.org/api/geocoding-api
       const apiCallByCity =
-        "http://api.openweathermap.org/geo/1.0/direct?q=" +
-        this.userInputs.city +
-        "&limit=" +
-        this.limit +
-        "&appid=";
+        "http://api.openweathermap.org/geo/1.0/direct?q=" +this.userInputs.city +"&limit=" +this.limit +"&appid=";
       const apiCallByStateCode =
         "http://api.openweathermap.org/geo/1.0/direct?q=" +
-        this.userInputs.stateCode +
-        "&limit=" +
-        this.limit +
-        "&appid=";
+        this.userInputs.stateCode +"&limit=" +this.limit +"&appid=";
       const apiCallByCountryCode =
         "http://api.openweathermap.org/geo/1.0/direct?q=" +
-        this.userInputs.countryCode +
-        "&limit=" +
-        this.limit +
-        "&appid=";
+        this.userInputs.countryCode +"&limit=" +this.limit +"&appid=";
       console.log(
-        "ByStateCode: " +
-          apiCallByStateCode +
-          "\nByCountryCode: " +
-          apiCallByCountryCode +
-          "\nByCityName: " +
-          apiCallByCity
+        "ByStateCode:"+apiCallByStateCode+"\nByCountryCode: "+apiCallByCountryCode+"\nByCityName: "+apiCallByCity
       );
       axios
         .get(apiCallByCountryCode + process.env.VUE_APP_API_KEY)
@@ -88,35 +79,20 @@ export default {
         });
     },
     getWeather() {
-      // https://openweathermap.org/current
       axios
         .get(
-          "https://api.openweathermap.org/data/2.5/weather?lat=" +
-            this.lat +
-            "&lon=" +
-            this.lon +
-            "&appid=" +
-            process.env.VUE_APP_API_KEY
-        )
+          "https://api.openweathermap.org/data/2.5/weather?lat="
+          +this.lat+"&lon="+this.lon+"&appid="+process.env.VUE_APP_API_KEY)
         .then((response) => {
           console.log(response.data);
+          this.bruteWeatherData = response.data;
+          console.log(this.bruteWeatherData)
         });
     },
     getCity() {
-      console.log("http://api.openweathermap.org/geo/1.0/reverse?lat=" +
-            this.lat +
-            "&lon=" +
-            this.lon +
-            "&limit=1&appid=" +
-            process.env.VUE_APP_API_KEY)
       axios
-        .get(
-          "http://api.openweathermap.org/geo/1.0/reverse?lat=" +
-            this.lat +
-            "&lon=" +
-            this.lon +
-            "&limit=1&appid=" +
-            process.env.VUE_APP_API_KEY
+        .get("http://api.openweathermap.org/geo/1.0/reverse?lat="+
+            this.lat+"&lon="+this.lon+"&limit=1&appid="+process.env.VUE_APP_API_KEY
         )
         .then((response) => {
           console.log(response.data);
