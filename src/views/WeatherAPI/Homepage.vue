@@ -1,6 +1,5 @@
 <template>
   <div class="mainBody">
-    something
     <input type="text" placeholder="Nome da Cidade" v-model="userInputs.city" />
     <input
       type="text"
@@ -22,7 +21,7 @@
     <div class="weatherInfo">
       <h1>getAPIData</h1><br>
 
-      <h5>Location: <p>{{ this.bruteWeatherData.name}} - Longitude: {{this.bruteWeatherData.coords.lon}} | Latitude: {{this.bruteWeatherData.coords.lat}}</p></h5> 
+      <h5>Location: <p>{{ this.bruteWeatherData.name}} - Longitude: {{this.lon}} | Latitude: {{this.lat}}</p></h5> 
     </div>
   </div>
 </template>

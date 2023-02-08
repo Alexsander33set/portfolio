@@ -1,4 +1,4 @@
-<template style="background:red;">
+<template>
   <topBar 
     :preferedLanguage="this.preferedLanguage"
     :supportedLanguages="this.supportedLanguages"
