@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       preferedLanguage: "",
-      preferedTheme: "",
+      darkTheme: "",
       supportedLanguages: [
         { name: "Português Brasil", code: "pt-BR" },
         { name: "English", code: "en-US" },
@@ -30,7 +30,7 @@ export default {
     window
       .matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", (event) => {
-        this.preferedTheme = event.matches ? "dark" : "light";
+        this.darkTheme = event.matches ? "dark" : "light";
       });
   },
   components: {
@@ -52,10 +52,8 @@ export default {
       console.log("logado do filho");
     },
     any() {
-      this.preferedTheme =
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches;
-      console.log(this.preferedTheme ? "dark" : "light");
+      this.darkTheme=window.matchMedia("(prefers-color-scheme: dark)").matches;
+      console.log(this.darkTheme ? "dark" : "light");
     },
   },
 };
@@ -78,7 +76,7 @@ export default {
 @media (prefers-color-scheme: dark)
 {
   #app {
-    background: #1e2124;
+    background: #000f1d;
     color: white;
   }
   nav{
