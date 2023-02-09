@@ -21,8 +21,8 @@
       <div class="containerTemp">
         <img src="http://openweathermap.org/img/wn/10d@2x.png" alt=""/>
         <div class="tempData">
-          <div>{{ this.bruteWeatherData.main.temp }}<!-- º C | º F | --> º K</div>
-          <div class="minMax"><p>{{"Min: "+ this.bruteWeatherData.main.temp_min}} º</p><p>Max: {{ this.bruteWeatherData.main.temp_max }} º</p></div>
+          <div>{{ (this.bruteWeatherData.main.temp-273.15).toFixed(2)}}<!-- º C | º F | --> º C</div>
+          <div class="minMax"><p>{{"Min: "+ (this.bruteWeatherData.main.temp_min-273.15).toFixed(2)}} º</p><p>Max: {{ (this.bruteWeatherData.main.temp_max-273.15).toFixed(2) }} º</p></div>
         </div>
       </div>     
     </div>
