@@ -51,4 +51,19 @@ export default {
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+/*---------------------------------*/
+.navbar {
+  background: rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid #fff ;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  .navbarRight {
+    display: flex;
+    align-items: center;
+  }
+}
+
+</style>

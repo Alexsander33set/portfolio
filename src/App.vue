@@ -1,19 +1,11 @@
 <template>
-  <topBar 
-    :preferedLanguage="this.preferedLanguage"
-    :supportedLanguages="this.supportedLanguages"
-    @onLog="onLogi"
-  />
-  <div
-    style="height: 100px; width: 100px; background: red"
-    @click="any()"
-  ></div>
+  <!--<div style="height: 100px; width: 100px; background: red" @click="any()"/>-->
   
   <router-view />
 </template>
 
 <script>
-import topBar from "./components/TopBar.vue";
+
 export default {
   data() {
     return {
@@ -27,14 +19,7 @@ export default {
   },
   created() {
     this.checkLanguages();
-    window
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (event) => {
-        this.darkTheme = event.matches ? "dark" : "light";
-      });
-  },
-  components: {
-    topBar,
+    this.getTheme();
   },
   methods: {
     checkLanguages() {
@@ -48,6 +33,13 @@ export default {
           this.preferedLanguage
       );
     },
+    getTheme(){
+      window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (event) => {
+        this.darkTheme = event.matches ? "dark" : "light";
+      });
+    },
     onLogi() {
       console.log("logado do filho");
     },
@@ -58,7 +50,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss"> 
 * {
   margin: 0;
   padding: 0;
@@ -69,10 +61,9 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
   min-height: 100dvh;
 }
+/*
 @media (prefers-color-scheme: dark)
 {
   #app {
@@ -128,19 +119,7 @@ button {
   }
 }
 
-/*---------------------------------*/
-.navbar {
-  background: rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid #fff ;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
 
-  .navbarRight {
-    display: flex;
-    align-items: center;
-  }
-}
 h3 {
   margin: 40px 0 0;
 }
@@ -155,5 +134,5 @@ li {
 a {
   color: #42b983;
 }
-/*---------------------------------*/
+---------------------------------*/
 </style>

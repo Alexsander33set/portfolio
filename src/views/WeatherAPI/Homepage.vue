@@ -1,5 +1,5 @@
 <template>
-  <div class="mainBody">
+  <!-- <div>
     <button @click="getCoordinates()">try get API</button><br><br>
     <button @click="getWeather()">try get API Weather</button>
     <br><br>
@@ -18,7 +18,7 @@
         <article class="weatherCard">
         <img src="http://openweathermap.org/img/wn/10d@2x.png" alt=""/>
         <div class="tempData">
-          <div>{{ (this.bruteWeatherData.main.temp-273.15).toFixed(2)}}<!-- º C | º F | --> º C</div>
+          <div>{{ (this.bruteWeatherData.main.temp-273.15).toFixed(2)}} º C | º F |  º C</div>
           <div class="minMax"><p>{{"Min: "+ (this.bruteWeatherData.main.temp_min-273.15).toFixed(2)}} º</p><p>Max: {{ (this.bruteWeatherData.main.temp_max-273.15).toFixed(2) }} º</p></div>
         </div>
         <div class="selectMetricUnit" style="gap:12px;">
@@ -49,8 +49,20 @@
       </article>
       </div>    
     </div>
-    <template v-else>Ops! alguem erro ocorreu...</template>
   </div>
+    <template v-else>Ops! alguem erro ocorreu...</template> -->
+
+    <div class="mainBody">
+      <div class="navbar">Navbar</div>
+      <main class="mainContainer">
+        Main
+      </main>
+      <footer>Footer</footer>
+
+    </div>
+
+
+
 </template>
 <script>
 import axios from "axios";
@@ -122,8 +134,8 @@ export default {
     getGeolocatization() {
       let successCallback = (position) => {
         console.log(position);
-        this.lon = position.coords.latitude.toFixed(2);
-        this.lat = position.coords.longitude.toFixed(2);
+        this.lat = position.coords.latitude.toFixed(2);
+        this.lon = position.coords.longitude.toFixed(2);
       };
       let errorCallback = (error) => {
         console.log(error);
@@ -165,7 +177,21 @@ export default {
 
 <style>
 
-.weatherContainer{
+.navbar{
+  height: 56px;
+}
+
+
+
+
+
+
+
+
+
+
+@media (min-width: 1024px){
+  .weatherContainer{
   display: grid;
   grid-template-columns: repeat( auto-fit, minmax(400px, 1fr));
 }
@@ -192,4 +218,6 @@ export default {
       justify-content: space-between;
       gap: 24px;
     }
+}
+
 </style>
