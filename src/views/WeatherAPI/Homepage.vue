@@ -13,56 +13,19 @@
 
       <h5>Location: <p>{{ this.bruteWeatherData.name }} - Longitude: {{ this.lon ? this.lon : "Sem acesso" }} | Latitude:
           {{ this.lat ? this.lat : "Sem acesso" }}</p>
-      </h5>
-      <div class="weatherContainer">
-        <article class="weatherCard">
-        <img src="http://openweathermap.org/img/wn/10d@2x.png" alt=""/>
-        <div class="tempData">
-          <div>{{ (this.bruteWeatherData.main.temp-273.15).toFixed(2)}} º C | º F |  º C</div>
-          <div class="minMax"><p>{{"Min: "+ (this.bruteWeatherData.main.temp_min-273.15).toFixed(2)}} º</p><p>Max: {{ (this.bruteWeatherData.main.temp_max-273.15).toFixed(2) }} º</p></div>
-        </div>
-        <div class="selectMetricUnit" style="gap:12px;">
-            <div style="font-size:1rem; user-select: none; cursor:pointer;" @click="this.userWeatherPreferences.metricUnit='C'">°C</div>
-            <div style="font-size:1rem; user-select: none; cursor:pointer;" @click="this.userWeatherPreferences.metricUnit='F'">°F</div>
-            <div style="font-size:1rem; user-select: none; cursor:pointer;" @click="this.userWeatherPreferences.metricUnit='K'"> °K</div>
-        </div>
-      </article>     
-      <article class="weatherCard">
-        <div class="tempData" style="font-size:1rem;">
-          <div>Pressão: {{ this.bruteWeatherData.main.pressure}} mb</div>
-        </div>
-      </article> 
-      <article class="weatherCard">
-        <div class="tempData" style="font-size:1rem;">
-          <div>Humidade: {{ this.bruteWeatherData.main.humidity}}%</div>
-        </div>
-      </article>
-      <article class="weatherCard">
-        <div class="tempData" style="font-size:1rem;">
-          <div>Visibilidade: {{ (this.bruteWeatherData.visibility/100) + "%"}}</div>
-        </div>
-      </article>
-      <article class="weatherCard">
-        <div class="tempData" style="font-size:1rem;">
-          <div>Velocidade do vento: {{ this.bruteWeatherData.wind.speed + "m/h"}}</div>
-        </div>
-      </article>
-      </div>    
-    </div>
-  </div>
-    <template v-else>Ops! alguem erro ocorreu...</template> -->
+      </h5>-->
 
   <div class="mainBody">
     <div class="navbar">Navbar</div>
-    <main class="mainContainer">
-      <div>Atualizado em 0m</div>
-      <div class="weatherIcon"><img :src="'http://openweathermap.org/img/wn/'+this.bruteWeatherData.weather[0].icon+'@2x.png'" :alt="this.bruteWeatherData.weather[0].description" ></div>
-      <div class="weatherCity">{{ this.bruteWeatherData.name }}</div>
+    <main class="mainContainer" v-if="true">
+      <div class="updatedIn">Atualizado em 0m <img src="../../assets/icons/update.svg" height="12"></div>
+      <div class="weatherIcon"><img height="180" :src="'http://openweathermap.org/img/wn/'+this.bruteWeatherData.weather[0].icon+'@2x.png'" :alt="this.bruteWeatherData.weather[0].description" ></div>
+      <div class="weatherCity">{{ this.bruteWeatherData.name + ", " + this.bruteWeatherData.sys.country }}</div>
       <div class="mainTemperature">
         <div class="averageTemp">{{ (this.bruteWeatherData.main.temp-273.15).toFixed(2)}} º C</div>
         <div class="maxMinTemp">
-          <div class="maxTemp"><i></i><p>↑{{(this.bruteWeatherData.main.temp_max-273.15).toFixed(2)}} ºC</p></div>
-          <div class="maxTemp"><i></i><p>↓{{(this.bruteWeatherData.main.temp_min-273.15).toFixed(2)}} ºC</p></div>
+          <div class="maxTemp"><i>↑</i><p>{{(this.bruteWeatherData.main.temp_max-273.15).toFixed(2)}} ºC</p></div>
+          <div class="minTemp"><i>↓</i><p>{{(this.bruteWeatherData.main.temp_min-273.15).toFixed(2)}} ºC</p></div>
         </div>
       </div>
       <div class="tempTex">{{ this.bruteWeatherData.weather[0].description }}</div>
@@ -85,6 +48,7 @@
         </article>
       </div>
     </main>
+    <main v-else>Ops! alguem deu errado...</main>
     <footer>Footer</footer>
   </div>
 </template>
@@ -170,12 +134,7 @@ export default {
     getWeather() {
       axios
         .get(
-          "https://api.openweathermap.org/data/2.5/weather?lat=" +
-            this.lat +
-            "&lon=" +
-            this.lon +
-            "&appid=" +
-            process.env.VUE_APP_API_KEY
+          "https://api.openweathermap.org/data/2.5/weather?lat="+this.lat+"&lon="+this.lon+"&appid="+process.env.VUE_APP_API_KEY
         )
         .then((response) => {
           console.log(response.data);
@@ -212,16 +171,30 @@ export default {
 </script>
 
 <style >
-.mainBody {background: #E5ECF4}
+/*----- NAVBAR -----*/
 .navbar {
   height: 56px;
   background: rgba(0, 128, 0, 0.13);
 }
+/*----- Main -----*/
+
+.mainBody {background: #E5ECF4}
+.mainContainer{
+  margin: 0 48px;
+  text-align:center;
+}
+.updatedIn{text-align: end;margin: 24px 0 -12px 0;}
+.weatherCity{font-size:32px;color: #484848;}
+.mainTemperature {display: flex;justify-content: center;gap: 12px;margin-top: 28px;}
+.mainTemperature .averageTemp {font-size: 36px;color: #242424;}
+.mainTemperature .maxMinTemp :is(.maxTemp, .minTemp){display: flex;}
+.mainTemperature :is(.maxMinTemp, .maxTemp)  i{font-style: normal;}
+.mainTemperature .maxMinTemp .maxTemp i{color: #EC6E4C;}
+.mainTemperature .maxMinTemp .minTemp i{color: #00BDF9;}
+.tempTex{font-size: 32px;color: #242424;margin: 18px 0 28px 0;text-transform: capitalize;}
 .cardsContainer{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
-  margin: 12px;
-  background: rgba(255, 255, 0, 0.425);
   gap: 12px;
 }
 .card{background: white;
@@ -240,6 +213,7 @@ export default {
   font-weight: 500;
   font-size: 20;
   color: #444444;
+  line-height: 400%;
 }
 .grid2{grid-column: 1/3;}
 
