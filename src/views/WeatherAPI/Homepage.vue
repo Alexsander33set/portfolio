@@ -18,11 +18,11 @@
   <div class="mainBody">
     <div class="navbar">Navbar</div>
     <main class="mainContainer" v-if="true">
-      <div class="updatedIn">Atualizado em 0m <img src="../../assets/icons/update.svg" height="12"></div>
-      <div class="weatherIcon"><img height="180" :src="'http://openweathermap.org/img/wn/'+this.bruteWeatherData.weather[0].icon+'@2x.png'" :alt="this.bruteWeatherData.weather[0].description" ></div>
-      <div class="weatherCity">{{ this.bruteWeatherData.name + ", " + this.bruteWeatherData.sys.country }}</div>
+      <div class="updatedIn">Atualizado em 0m <img src="../../assets/icons/update.svg" height="12"/></div>
+      <div class="weatherIcon"><img :src="'http://openweathermap.org/img/wn/'+this.bruteWeatherData.weather[0].icon+'@2x.png'" :alt="this.bruteWeatherData.weather[0].description" ></div>
+      <div class="weatherCity">{{ this.bruteWeatherData.name + ", " + this.bruteWeatherData.sys.country }} <img @click="getWeather()" src="../../assets/icons/edit.svg"/></div>
       <div class="mainTemperature">
-        <div class="averageTemp">{{ (this.bruteWeatherData.main.temp-273.15).toFixed(2)}} º C</div>
+        <div class="averageTemp">{{ (this.bruteWeatherData.main.temp-273.15).toFixed(0)}} ºC</div>
         <div class="maxMinTemp">
           <div class="maxTemp"><i>↑</i><p>{{(this.bruteWeatherData.main.temp_max-273.15).toFixed(2)}} ºC</p></div>
           <div class="minTemp"><i>↓</i><p>{{(this.bruteWeatherData.main.temp_min-273.15).toFixed(2)}} ºC</p></div>
@@ -32,7 +32,7 @@
       <div class="cardsContainer">
         <article class="card grid2">
           <h6>Sensaçào Térmica</h6>
-          <p>{{ this.bruteWeatherData.main.feels_like }}</p>
+          <p>{{ (this.bruteWeatherData.main.feels_like-273.15).toFixed(2) }} ºC</p>
         </article>
         <article class="card">
           <h6>Visibilidade</h6>
@@ -114,6 +114,7 @@ export default {
       lon: "",
       geoCity: "",
       geocityLocation: "",
+      timestamp:'',
     };
   },
   created() {
@@ -125,6 +126,7 @@ export default {
         console.log(position);
         this.lat = position.coords.latitude.toFixed(2);
         this.lon = position.coords.longitude.toFixed(2);
+        this.timestamp= new Date(position.timestamp); 
       };
       let errorCallback = (error) => {
         console.log(error);
@@ -183,8 +185,14 @@ export default {
   margin: 0 48px;
   text-align:center;
 }
-.updatedIn{text-align: end;margin: 24px 0 -12px 0;}
-.weatherCity{font-size:32px;color: #484848;}
+.updatedIn{text-align: end;margin: 24px 0 -12px 0;cursor: pointer;}
+.updatedIn:hover img{animation: boom 1s;}
+.weatherIcon img{
+  height: 200px;
+  filter:drop-shadow(0 0 4px rgba(0, 0, 0, 0.15)) ;
+}
+.weatherCity{font-size:32px;color: #484848;height: max-content;}
+.weatherCity img{height:26px; cursor:pointer;}
 .mainTemperature {display: flex;justify-content: center;gap: 12px;margin-top: 28px;}
 .mainTemperature .averageTemp {font-size: 36px;color: #242424;}
 .mainTemperature .maxMinTemp :is(.maxTemp, .minTemp){display: flex;}
@@ -206,7 +214,7 @@ export default {
 }
 .card h6{
   font-weight: 400;
-  font-size: 14;
+  font-size: 14px;
   color: #363636;
 }
 .card p{
@@ -216,6 +224,22 @@ export default {
   line-height: 400%;
 }
 .grid2{grid-column: 1/3;}
+
+
+@keyframes boom{
+  0%{
+    filter:drop-shadow(0 0 0 rgba(0, 0, 0, 1));
+  }
+  100%{
+    filter:drop-shadow( 0 0 20px rgba(0, 0, 0, 0));
+    transform:rotate(360deg);
+  }
+}
+
+
+
+
+
 
 @media (min-width: 1024px) {
   .weatherContainer {

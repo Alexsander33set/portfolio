@@ -58,7 +58,7 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-html,body,.mainBody{width: 100dvw; height: 100dvh;}
+html,body,.mainBody{min-width: 100dvw; min-height: 100dvh;}
 
 #app {
   font-family:Inter, Avenir, Helvetica, Arial, sans-serif;
