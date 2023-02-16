@@ -1,26 +1,19 @@
 <template>
-  <!-- <div>
-    <button @click="getCoordinates()">try get API</button><br><br>
-    <button @click="getWeather()">try get API Weather</button>
-    <br><br>
-    <hr /><br />
-    <button @click="getCity()">Location</button>
-    <input type="text" disabled="true" v-model="geocityLocation" />
-    <br>
-    <hr /><br>
-    <div class="weatherInfo" v-if="this.bruteWeatherData.cod==200">
-      <h1>getAPIData</h1><br>
-
-      <h5>Location: <p>{{ this.bruteWeatherData.name }} - Longitude: {{ this.lon ? this.lon : "Sem acesso" }} | Latitude:
-          {{ this.lat ? this.lat : "Sem acesso" }}</p>
-      </h5>-->
-
   <div class="mainBody">
     <div class="navbar">Navbar</div>
     <main class="mainContainer" v-if="true">
-      <div class="updatedIn">Atualizado em 0m <img src="../../assets/icons/update.svg" height="12"/></div>
+      <div class="updatedIn" @click="getWeather()">Atualizado em 0m <img src="../../assets/icons/update.svg" height="12"/></div>
       <div class="weatherIcon"><img :src="'http://openweathermap.org/img/wn/'+this.bruteWeatherData.weather[0].icon+'@2x.png'" :alt="this.bruteWeatherData.weather[0].description" ></div>
-      <div class="weatherCity">{{ this.bruteWeatherData.name + ", " + this.bruteWeatherData.sys.country }} <img @click="getWeather()" src="../../assets/icons/edit.svg"/></div>
+      <div class="weatherCity">
+        <template v-if="this.editCity==false">
+          <span>{{this.bruteWeatherData.name + ", " + this.bruteWeatherData.sys.country + " "}}</span> 
+          <img @click="this.editCity=!this.editCity" src="../../assets/icons/edit.svg"/>
+        </template>
+        <template v-else>
+          <input type="text" v-model="this.userInputs.city" placeholder="Cidade" @keypress.enter="getGeolocatizationByCity()"> {{" "}}
+          <img @click="this.editCity=!this.editCity" src="../../assets/icons/procurar.svg"/>
+        </template>
+      </div>
       <div class="mainTemperature">
         <div class="averageTemp">{{ (this.bruteWeatherData.main.temp-273.15).toFixed(0)}} ºC</div>
         <div class="maxMinTemp">
@@ -115,12 +108,14 @@ export default {
       geoCity: "",
       geocityLocation: "",
       timestamp:'',
+      editCity:false,
     };
   },
   created() {
     this.getGeolocatization();
   },
   methods: {
+    anything(wantSee){console.log(wantSee)},
     getGeolocatization() {
       let successCallback = (position) => {
         console.log(position);
@@ -168,6 +163,18 @@ export default {
       }
       converting == "kelvin2ceusius" ? temperature - 272 : "";
     },
+    getGeolocatizationByCity(){
+      axios
+        .get(
+          "https://api.openweathermap.org/data/2.5/weather?q="+this.userInputs.city+"&appid="+process.env.VUE_APP_API_KEY
+        )
+        .then((response) => {
+          console.log(response.data);
+          this.bruteWeatherData = response.data;
+          console.log(this.bruteWeatherData);
+          this.editCity=false
+        });
+    }
   },
 };
 </script>
@@ -191,8 +198,9 @@ export default {
   height: 200px;
   filter:drop-shadow(0 0 4px rgba(0, 0, 0, 0.15)) ;
 }
-.weatherCity{font-size:32px;color: #484848;height: max-content;}
+.weatherCity{font-size:32px;color: #484848;height: max-content;display: flex;align-items: center;justify-content: center; gap: 8px;}
 .weatherCity img{height:26px; cursor:pointer;}
+.weatherCity input[type="text"]{height: 32px;border: none;border-bottom: 2px solid #a6a6a6;padding: 0 4px;font-size: 18px; font-family: Inter;background: transparent;}
 .mainTemperature {display: flex;justify-content: center;gap: 12px;margin-top: 28px;}
 .mainTemperature .averageTemp {font-size: 36px;color: #242424;}
 .mainTemperature .maxMinTemp :is(.maxTemp, .minTemp){display: flex;}
@@ -241,33 +249,34 @@ export default {
 
 
 
-@media (min-width: 1024px) {
-  .weatherContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+@media (min-width: 1239px) {
+  .mainContainer{
+    margin: 0 200px;
+    background: #E5ECF4;
+    min-height: 100dvh;
   }
-  .weatherCard {
-    background: rgba(100, 200, 255, 0.2);
-    box-shadow: 2px 2px 8px -1px black;
-    border-radius: 16px;
-    margin: 24px 8px;
-    padding: 1rem 2rem;
+  /*    <div class="loading"><span class="point point1"></span><span class="point point2"></span></div>  */
+  .loading{
+    aspect-ratio: 5/3;
+    height: 48px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    font-size: 2.7rem;
-    max-width: max-content;
-  }
-  .weatherCard img {
-    height: 120%;
-  }
-  .weatherCard .tempData .minMax {
-    font-size: 0.725rem;
-    display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    align-items: flex-end;
+  }
+  .point{
+    aspect-ratio: 1/1;
+    height: 12px;
+    background: rgb(255, 91, 27);
+    border-radius: 50%;
+    
+  }
+  .point1{animation: up 1s ease-in-out infinite alternate;}
+  .point2{animation: up 1s .4s ease-in-out infinite alternate;}
+  .point3{animation: up 1s .8s ease-in-out infinite alternate;}
+  @keyframes up {
+    100%{
+      transform:translateY(-36px);
+    }
   }
 }
 </style>

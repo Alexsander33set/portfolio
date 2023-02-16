@@ -57,6 +57,7 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  outline: transparent;
 }
 html,body,.mainBody{min-width: 100dvw; min-height: 100dvh;}
 
