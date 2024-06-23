@@ -4,3 +4,6 @@
 #* virtual Envirement
 node_modules
 .env
+
+#* Documentation
+.obsidian
