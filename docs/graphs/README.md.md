@@ -1,0 +1,1 @@
+Files included in this folder is compatible with Excalidraw
