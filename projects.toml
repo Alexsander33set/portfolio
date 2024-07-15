@@ -1,0 +1,10 @@
+[projects.weather-forecast]
+name="Weather Forecast"
+description="something"
+technologies=[]
+url="www.apfs.com.br"
+
+[projects.rent-calculator]
+name="Rent Calculator"
+description="something"
+technologies=[]

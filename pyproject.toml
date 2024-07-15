@@ -1,0 +1,14 @@
+[project]
+name = "portfolio"
+description = "A sample Python project"
+authors = [
+  {name = "A. Random Developer", email = "author@example.com" }
+]
+version = "0.1"
+readme = "README.md"
+
+dependencies= ["Flask","Flask-Cors"]
+
+[project.scripts]
+
+run = 'python .\app\server\app.py'
