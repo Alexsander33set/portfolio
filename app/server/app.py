@@ -17,11 +17,8 @@ def serve_static(path):
 
 
 @app.route('/api/projects')
-def get_projects():
-    
-    try:
-        projects = parse_toml_file('projects.toml')
-        return jsonify(projects)
-    except:
-        return jsonify({"error":"500"})
-    
+def get_projects(): 
+    projects = parse_toml_file('projects.toml', 'projects')
+    if not projects:
+        return 404
+    return projects, 200 
