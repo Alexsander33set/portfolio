@@ -13,4 +13,4 @@ env:
 	endif
 
 run app:
-	flask --app .\app\server\app.py run
+	flask --app .\app\server\app.py run -p 8080
