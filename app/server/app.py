@@ -1,13 +1,23 @@
 import os
-from flask import Flask, jsonify, send_from_directory
-from gevent.pywsgi import WSGIServer
-
-from utils.toml_tools import parse_toml_file
+from flask import Flask, send_from_directory
+#*
+import logging
+logging.getLogger().setLevel(logging.INFO)
+#*
+from dotenv import load_dotenv
+load_dotenv()
 
 #* ==============================================
+from routes.projects import projects
+
+
 PORT = int(os.getenv('PORT', default=8080))
 
 app = Flask(__name__)
+
+#* == Blueprints =============================================
+app.register_blueprint(projects)
+
 
 @app.route('/')
 def index():
@@ -18,16 +28,5 @@ def serve_static(path):
     return send_from_directory('./template', path)
 
 
-@app.route('/api/projects')
-def get_projects(): 
-    projects = parse_toml_file('projects.toml', 'projects')
-    if not projects:
-        return 404
-    print(projects)
-    return jsonify(projects), 200 
-
 if __name__ == '__main__':
-    print(f"\nrunning at: localhost:{PORT}\n")
-    # app.run(debug=False)
-    http_server = WSGIServer(('0.0.0.0', PORT), app)
-    http_server.serve_forever()
+    app.run(host='0.0.0.0',port=PORT, debug='True')
