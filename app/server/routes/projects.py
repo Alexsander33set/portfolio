@@ -1,13 +1,13 @@
 from flask import Blueprint
-from db.mongo import mongo_instance, get_projects , add_project
+from db.mongo import get_projects, add_project
 
 
 projects = Blueprint('projects', __name__)
 
-@projects.route('/zeca')
-def index():
+@projects.route('/api/projects')
+def get_projects_route():
   return get_projects()
 
-@projects.route('/zecao')
-def indexx():
+@projects.route('/api/add-project')
+def set_project():
   return add_project()
