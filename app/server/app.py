@@ -12,7 +12,6 @@ from routes.projects import projects
 
 
 PORT = int(os.getenv('PORT', default=8080))
-
 app = Flask(__name__)
 
 #* == Blueprints =============================================

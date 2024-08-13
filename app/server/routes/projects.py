@@ -1,5 +1,10 @@
+import datetime
+
 from flask import Blueprint
 from db.mongo import get_projects, add_project
+
+
+
 
 
 projects = Blueprint('projects', __name__)
@@ -10,4 +15,15 @@ def get_projects_route():
 
 @projects.route('/api/add-project')
 def set_project():
-  return add_project()
+  example = {
+    "name": "Weather Forecast",
+    "slug": "weather-forecast",
+    "description": "something",
+    "technologies": ["java", "node", "python"],
+    "url": "www.apfs.com.br",
+    "is_private": False,
+    "created_at": int(datetime.datetime.now().timestamp())
+  }
+
+
+  return add_project(example)
