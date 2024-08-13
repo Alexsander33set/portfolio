@@ -1,5 +1,6 @@
 #* IDE
 .vscode
+.idea
 
 #* virtual Envirement
 node_modules
