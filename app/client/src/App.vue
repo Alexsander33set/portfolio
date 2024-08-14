@@ -6,7 +6,28 @@ import FooterComponent from './components/layout/FooterComponent.vue'
 
 <template>
   <Navbar />
-  <RouterView />
   from App.vue: {{ $t('hello') }}
+  <Transition name="fade">
+    <RouterView />
+  </Transition>
   <FooterComponent />
 </template>
+
+<style>
+
+.fade-enter-from,
+.fade-leave-from{
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active{
+  transition: opacity 500ms;
+}
+
+.fade-enter-to,
+.fade-leave-to{
+  opacity: 1;
+}
+
+</style>
