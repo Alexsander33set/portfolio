@@ -7,5 +7,6 @@ import FooterComponent from './components/layout/FooterComponent.vue'
 <template>
   <Navbar />
   <RouterView />
+  from App.vue: {{ $t('hello') }}
   <FooterComponent />
 </template>
