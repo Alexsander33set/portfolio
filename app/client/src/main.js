@@ -1,4 +1,4 @@
-import './assets/main.css'
+import './assets/index.css'
 import { languages } from './locales'
 
 import { createApp } from 'vue'
@@ -8,7 +8,8 @@ import { createI18n } from 'vue-i18n'
 const i18n = createI18n({
   locale: 'pt-br',
   fallbackLocale: 'en-us',
-  messages: languages
+  messages: languages,
+  legacy: false,
 })
 
 import App from './App.vue'

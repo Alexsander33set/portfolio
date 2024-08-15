@@ -4,9 +4,9 @@
 </script>
 
 <template>
-  <Footer>
+  <footer>
     Footer
-  </Footer>
+  </footer>
 </template>
 
 

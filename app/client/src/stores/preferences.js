@@ -4,18 +4,19 @@ import { defineStore } from 'pinia'
 import { useI18n } from 'vue-i18n'
 
 
-export const preferences = defineStore('preferences', () => {
+export const usePreferencesStore = defineStore('preferences', () => {
   const { locale } = useI18n()
   
   const language = ref(locale.value)
+  
   const acceptedLanguages = [
     {
       label:"Português Brasil",
-      value:"pt_br"
+      value:"pt-br"
     },
     {
       label:"English",
-      value:"en_us"
+      value:"en-us"
     }
   ]
 
@@ -42,6 +43,7 @@ export const preferences = defineStore('preferences', () => {
   )
 
   function toggleLanguage(i18n, newValue) {
+    console.log("toggleLanguage called")
     if (i18n.availableLocales.includes(newValue)) {
       try {
         i18n.locale = newValue
