@@ -31,7 +31,7 @@ import {
 
 <template>
   <header class="flex justify-between p-2 shadow-md bg-zinc-950 text-white">
-    <div class="logo">
+    <div id="logo" class="flex items-center">
       <img src="@/assets/logo-white.svg" alt="APFS logo in letters">
       {{ prefStore }}
     </div>
