@@ -33,11 +33,10 @@ import {
   <header class="flex justify-between p-2 shadow-md bg-zinc-950 text-white">
     <div id="logo" class="flex items-center">
       <img src="@/assets/logo-white.svg" alt="APFS logo in letters">
-      {{ prefStore }}
     </div>
-    <nav class="inline-flex gap-2 items-center p-1">
+    <nav class="inline-flex gap-2 items-center p-1 text-nowrap">
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/project/weather-forecast">Project X</RouterLink>
       <Separator orientation="vertical" />
       <Select id="language-changer">
         <SelectTrigger>
