@@ -12,11 +12,13 @@ export const usePreferencesStore = defineStore('preferences', () => {
   const acceptedLanguages = [
     {
       label:"Português Brasil",
-      value:"pt-br"
+      value:"pt-br",
+      icon:"flagpack:br"
     },
     {
       label:"English",
-      value:"en-us"
+      value:"en-us",
+      icon:"flagpack:us"
     }
   ]
 
