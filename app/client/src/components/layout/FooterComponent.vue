@@ -1,13 +1,7 @@
-<script setup>
-
-
-</script>
+<script setup></script>
 
 <template>
-  <footer>
+  <footer class="bg-zinc-900 text-white">
     Footer
   </footer>
 </template>
-
-
-<style lang="scss" scoped></style>

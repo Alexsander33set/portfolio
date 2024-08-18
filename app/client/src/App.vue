@@ -6,7 +6,6 @@ import FooterComponent from './components/layout/FooterComponent.vue'
 
 <template>
   <Navbar />
-  from App.vue: {{ $t('hello') }}
   <router-view v-slot="{ Component }">
     <Transition>
       <component :is="Component" />
