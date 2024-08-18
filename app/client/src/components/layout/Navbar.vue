@@ -41,11 +41,18 @@ import {
       <Separator orientation="vertical" />
       <Select id="language-changer">
         <SelectTrigger>
-          <SelectValue placeholder="Select a fruit" />
+          <SelectValue placeholder="Change language" />
         </SelectTrigger>
         <SelectContent>
-            <SelectItem v-for="(language, index) in prefStore.acceptedLanguages" :key="index" :value="language.value" @click="prefStore.toggleLanguage($i18n, language.value)"> 
-              {{language.label}}
+            <SelectItem class="flex" 
+              v-for="(language, index) in prefStore.acceptedLanguages" 
+              :key="index" 
+              :value="language.value" 
+              @click="prefStore.toggleLanguage($i18n, language.value)"> 
+              <span class="flex items-center gap-1">
+                <Icon :icon="language.icon"/>
+                {{language.label}}
+              </span>
             </SelectItem>
         </SelectContent>
       </Select>
