@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+
 import pymongo
 
 from bson import ObjectId
@@ -13,7 +14,7 @@ class JSONEncoder(json.JSONEncoder):
 
 MONGO_URL :str|None = os.getenv("MONGO_URL")
 if not MONGO_URL:
-  print("MONGO_URL not defined")
+  raise AttributeError("MONGO_URL not defined")
 
 db = pymongo.MongoClient(MONGO_URL)["portfolio"]
 projects_collection = db['projects']

@@ -1,0 +1,27 @@
+Installing Contrast agent
+Collecting contrast-agent
+  Downloading contrast_agent-8.5.0.tar.gz (822 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 822.8/822.8 kB 326.8 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: requests<3,>=2.4.2 in ./cio-ci-cd-venv/lib/python3.9/site-packages (from contrast-agent) (2.32.2)
+Collecting contrast-agent-lib~=0.7.0 (from contrast-agent)
+  Downloading contrast_agent_lib-0.7.0-py3-none-any.whl.metadata (779 bytes)
+Requirement already satisfied: charset-normalizer<4,>=2 in ./cio-ci-cd-venv/lib/python3.9/site-packages (from requests<3,>=2.4.2->contrast-agent) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in ./cio-ci-cd-venv/lib/python3.9/site-packages (from requests<3,>=2.4.2->contrast-agent) (3.7)
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./cio-ci-cd-venv/lib/python3.9/site-packages (from requests<3,>=2.4.2->contrast-agent) (2.2.2)
+Requirement already satisfied: certifi>=2017.4.17 in ./cio-ci-cd-venv/lib/python3.9/site-packages (from requests<3,>=2.4.2->contrast-agent) (2023.7.22)
+Downloading contrast_agent_lib-0.7.0-py3-none-any.whl (6.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.6/6.6 MB 234.5 MB/s eta 0:00:00
+Building wheels for collected packages: contrast-agent
+  Building wheel for contrast-agent (pyproject.toml): started
+  Building wheel for contrast-agent (pyproject.toml): finished with status 'done'
+  Created wheel for contrast-agent: filename=contrast_agent-8.5.0-cp39-cp39-linux_x86_64.whl size=1205273 sha256=b3614eeeda18de97428d36403084e5cea512c5a96f112587b57193212bd77d9d
+  Stored in directory: /tmp/pip-ephem-wheel-cache-t1erfmss/wheels/cf/22/4f/3fea1c6798240fdaf7b8660645654c8ca564640f101539ceac
+Successfully built contrast-agent
+Installing collected packages: contrast-agent-lib, contrast-agent
+Successfully installed contrast-agent-8.5.0 contrast-agent-lib-0.7.0
