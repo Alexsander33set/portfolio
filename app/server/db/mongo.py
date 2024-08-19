@@ -43,8 +43,8 @@ def get_projects():
 
     return JSONEncoder().encode(response)
 
-def get_project_by_slug(slug):
-  logging.info(" >>=====  Get Project by slug called =====<<")
+def get_project(slug:str):
+  logging.info(" >>=====  Get Project called =====<<")
   try:
     response = projects_collection.find_one({"slug": slug})
   except:
