@@ -1,6 +1,6 @@
 import datetime
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response
 from db.mongo import get_projects, add_project, get_project
 
 
@@ -11,15 +11,16 @@ projects = Blueprint('projects', __name__)
 
 @projects.route('/api/projects')
 def get_projects_route():
-  return get_projects()
+  projects = get_projects()
+  return Response(projects, mimetype='application/json')
 
-@projects.route('/api/project')
-def get_project_route():
-  project = request.args.get('project')
-  if not project:
+@projects.route('/api/project/<slug>')
+def get_project_route(slug):
+  if not slug:
     return jsonify({"error":"project not defined"}), 400
-
-  return get_project(project)
+  
+  project = get_project(slug)
+  return Response(project, mimetype='application/json')
 
 @projects.route('/api/add-project')
 def set_project():
