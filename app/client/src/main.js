@@ -6,8 +6,8 @@ import { createPinia } from 'pinia'
 import { createI18n } from 'vue-i18n'
 
 const i18n = createI18n({
-  locale: 'pt-br',
-  fallbackLocale: 'en-us',
+  locale: 'pt_br',
+  fallbackLocale: 'en_us',
   messages: languages,
   legacy: false,
 })

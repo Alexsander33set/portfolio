@@ -38,7 +38,7 @@ import {
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/project/weather-forecast">Project X</RouterLink>
       <Separator orientation="vertical" />
-      <Select id="language-changer">
+      <Select id="language-changer" v-model="prefStore.language">
         <SelectTrigger>
           <SelectValue placeholder="Change language" />
         </SelectTrigger>
@@ -46,8 +46,7 @@ import {
             <SelectItem class="flex" 
               v-for="(language, index) in prefStore.acceptedLanguages" 
               :key="index" 
-              :value="language.value" 
-              @click="prefStore.toggleLanguage($i18n, language.value)"> 
+              :value="language.value"> 
               <span class="flex items-center gap-1">
                 <Icon :icon="language.icon"/>
                 {{language.label}}
@@ -68,21 +67,21 @@ import {
       </v-menu> -->
       <DropdownMenu>
         <DropdownMenuTrigger as-child>
-          <Button variant="outline">
+          <Button variant="outline" class="bg-transparent">
             <Icon icon="radix-icons:moon" class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Icon icon="radix-icons:sun" class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span class="sr-only">Toggle theme</span>
+            <span class="sr-only">{{ $t('theme.toggle') }}</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem @click="mode = 'light'">
-            Light
+            {{ $t('theme.light') }}
           </DropdownMenuItem>
           <DropdownMenuItem @click="mode = 'dark'">
-            Dark
+            {{ $t('theme.dark') }}
           </DropdownMenuItem>
           <DropdownMenuItem @click="mode = 'auto'">
-            System
+              {{ $t('theme.system') }}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -6,61 +6,50 @@ import { useI18n } from 'vue-i18n'
 
 export const usePreferencesStore = defineStore('preferences', () => {
   const { locale } = useI18n()
-  
+  console.log("locale: " + locale.value)
+
   const language = ref(locale.value)
-  
   const acceptedLanguages = [
     {
       label:"Português Brasil",
-      value:"pt-br",
+      value:"pt_br",
       icon:"flagpack:br"
     },
     {
       label:"English",
-      value:"en-us",
+      value:"en_us",
       icon:"flagpack:us"
     }
   ]
-
-  if (localStorage.getItem("language")){
-    language.value = JSON.parse(localStorage.getItem("language"))
-    locale.value = JSON.parse(localStorage.getItem("language"))
-    console.log("OPA, tem coisa de language: " + language.value);
-  }else{
-    let PrefLangByNavigator = (navigator.language).toLowerCase()
-
-    acceptedLanguages.map((language) => {
-      if (language.value == PrefLangByNavigator) {
-        language.value = PrefLangByNavigator
-        locale.value = PrefLangByNavigator
-      }
-    })
+  function changeLanguage() {
+    locale.value = language.value
   }
   watch(
     language,
-    (languageValue) => {
-      localStorage.setItem("language", JSON.stringify(languageValue))
+    (langValue) => {
+      localStorage.setItem("language", JSON.stringify(langValue))
+      changeLanguage()
+      console.log("watch language: " + langValue)
     },
     { deep: true}
   )
 
-  function toggleLanguage(i18n, newValue) {
-    console.log("toggleLanguage called")
-    if (i18n.availableLocales.includes(newValue)) {
-      try {
-        i18n.locale = newValue
-        language.value = newValue
-        console.log('language changed to: '+i18n.locale)
-      } catch (error) {
-        console.error(error);
-      } 
-    }
+  if (localStorage.getItem("language")){
+    language.value = JSON.parse(localStorage.getItem("language"))
+    console.log("language localStorage: " + language.value);
+  }
+  else{
+    let langByBrowser = (navigator.language).toLowerCase().replace("-", "_")
+
+    acceptedLanguages.map((lang) => {
+      if (lang == langByBrowser) {
+        language.value = langByBrowser
+      }
+    })
   }
 
 
-
-
   return {
-    language, acceptedLanguages, toggleLanguage
+    language, acceptedLanguages
   }
 })
