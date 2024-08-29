@@ -7,7 +7,7 @@ const updatedAt = "18/08/2024"
 </script>
 
 <template>
-    <article class="p-8 min-w-full prose lg:prose-xs">
+    <article class="p-8 min-w-full prose lg:prose-xs dark:bg-gray-200 dark:marker:text-zinc-600">
         <template v-if="language == 'pt-br'">
             <h3 id="termos-de-privacidade-e-aceitação">Termos de Privacidade e Aceitação</h3>
             <p>Bem-vindo ao nosso aplicativo web. Priorizamos sua privacidade e estamos dedicados a proteger suas
