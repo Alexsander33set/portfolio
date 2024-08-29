@@ -43,13 +43,12 @@ def get_project(slug:str):
 
 def set_project_priority(slug, new_priority):
   logging.info(" >>=====  Set project priority called =====<<")
-  print("")
+  return projects_collection.update_one({"slug": slug}, {"$set": {"priority": new_priority}})
 
 def add_project(project):
   logging.info(" >>=====  Add project called =====<<")
-  result = ""
   return projects_collection.insert_one(project)
 
-def remove_project():
+def remove_project(slug):
   logging.info(" >>=====  Remove project called =====<<")
-  print("")
+  return projects_collection.delete_one({"slug": slug})
