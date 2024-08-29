@@ -4,12 +4,6 @@ import os
 
 import pymongo
 
-from bson import ObjectId
-class JSONEncoder(json.JSONEncoder):
-  def default(self, o):
-    if isinstance(o, ObjectId):
-      return str(o)
-    return json.JSONEncoder.default(self, o)
 #* =====================================================
 
 MONGO_URL :str|None = os.getenv("MONGO_URL")
@@ -26,7 +20,8 @@ projects_collection = db['projects']
 #* slug
 #* description
 #* technologies
-#* ping_route
+#* url
+#* priority
 #* is_private
 #* created_at
 #*
@@ -34,22 +29,17 @@ projects_collection = db['projects']
 
 def get_projects():
     logging.info(" >>=====  Get projects called =====<<")
-    response= []
-    try:
-      for i in projects_collection.find():
-        response.append(i)
-    except:
-      print("error on get projects")
-
-    return JSONEncoder().encode(response)
-
+    projects = list(projects_collection.find())
+    for project in projects:
+        project['_id'] = str(project['_id'])  # Converter ObjectId para string
+    return json.dumps(projects)
+  
 def get_project(slug:str):
   logging.info(" >>=====  Get Project called =====<<")
-  try:
-    response = projects_collection.find_one({"slug": slug})
-  except:
-    response = "something isn't right...."
-  return JSONEncoder().encode(response)
+  project = projects_collection.find_one({"slug": slug})
+  if project:
+      project['_id'] = str(project['_id'])  # Converter ObjectId para string
+  return json.dumps(project)
 
 def set_project_priority(slug, new_priority):
   logging.info(" >>=====  Set project priority called =====<<")
@@ -58,11 +48,7 @@ def set_project_priority(slug, new_priority):
 def add_project(project):
   logging.info(" >>=====  Add project called =====<<")
   result = ""
-  try:
-    result = projects_collection.insert_one(project)
-  except:
-    result = "erro"
-  return str(result)
+  return projects_collection.insert_one(project)
 
 def remove_project():
   logging.info(" >>=====  Remove project called =====<<")
