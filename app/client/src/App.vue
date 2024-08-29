@@ -17,11 +17,13 @@ import FooterComponent from './components/layout/FooterComponent.vue'
 <style>
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 500ms ease;
+  transition: all 500ms ease;
 }
 
 .v-enter-from,
 .v-leave-to {
+  position: absolute;
   opacity: 0;
+  transform: translate(100%, 100%);
 }
 </style>
