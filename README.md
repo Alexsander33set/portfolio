@@ -12,34 +12,34 @@
 ### 🎲 Running the application (server + frontend)
 
 ```bash
-Clone this repository
+# Clone this repository
 $ git clone https://github.com/Alexsander33set/portfolio.git
-Access the folder of the project
+# Access the folder of the project
 $ cd portfolio
-Access the server folder
+# Access the server folder
 $ cd app/server
-Install dependencies
-$ npm install
-Add environment variables
+# Install dependencies
+$ pip install -r requirements.txt
+# Add environment variables
 $ cp .env.example .env
-Run the application
+# Run the application
 $ python3 app.py
-The server will start at port:8080 - access http://localhost:8080
+# The server will start at port:8080 - access http://localhost:8080
 ```
 
 ### 🧭 Running the Frontend (client)
 
 ```bash
-Access the client folder
+# Access the client folder
 $ cd app/client
 
-Install dependencies
+# Install dependencies
 $ npm install
 
-Run the application in development mode
+# Run the application in development mode
 $ npm run dev
 
-The frontend will start at port:5173 - access http://localhost:5173
+# The frontend will start at port:5173 - access http://localhost:5173
 ```
 
 ## 🛠 Tecnologias
