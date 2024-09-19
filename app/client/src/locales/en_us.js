@@ -5,9 +5,30 @@ export const en_us = {
     dark: 'Dark',
     system: 'System'
   },
+  presentation: {
+    subtitle: 'Software Developer',
+    description: 'I am a software developer with a passion for creating innovative solutions. I have a strong interest in web development and I am always looking for new challenges.'
+  },
+  skills:{
+    title: "What your need?",
+    list: {
+      accessibility: "Accessibility",
+      security: "Security",
+      devops: "DevOps"
+    }
+  },
   projects: {
     view: 'View project',
-    title: 'Projects'
+    title: 'Projects',
+    github: 'View on GitHub'
+  },
+  tableOfContents: {
+    presentation: 'Presentation',
+    projects: 'Projects',
+    contacts: 'Contacts'
+  },
+  contacts: {
+    title: 'Contacts',
   },
   footer: {
     privacy: 'Privacy',
