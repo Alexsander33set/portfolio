@@ -21,6 +21,10 @@ app.register_blueprint(client)
 app.register_blueprint(projects)
 app.register_blueprint(auth, url_prefix='/auth')
 
+@app.route('/admin', methods=['GET'])
+@token_required
+def admin():
+    return 'Admin'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=PORT, debug='True')

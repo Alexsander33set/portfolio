@@ -9,3 +9,6 @@ toml
 
 #* DB
 pymongo
+
+#* JWT
+pyjwt

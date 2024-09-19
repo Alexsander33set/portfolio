@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomePage.vue'
 import ProjectPage from '../views/ProjectPage.vue'
 import PrivacyandAcceptanceTerms from '../views/PrivacyandAcceptanceTerms.vue'
+import AdminPage from '../views/AdminPage.vue'
+import LoginPage from '../views/LoginPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +25,19 @@ const router = createRouter({
       path: '/:language/privacy-&-acceptance-terms',
       name: 'Privacy and Acceptance Terms',
       component: PrivacyandAcceptanceTerms
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: AdminPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: LoginPage
     }
   ]
 })
