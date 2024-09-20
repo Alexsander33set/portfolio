@@ -92,6 +92,7 @@ try {
             <Icon icon="mdi:server" /> {{ $t('skills.list.devops') }}
         </article>
       </div>
+      <p class="text-xl mt-4">{{ $t('skills.description') }}</p>
     </section>
 
     <ProjectList id="projects" class="container"

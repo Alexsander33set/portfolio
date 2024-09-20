@@ -11,6 +11,7 @@ export const en_us = {
   },
   skills:{
     title: "What your need?",
+    description: "Let's work together",
     list: {
       accessibility: "Accessibility",
       security: "Security",
