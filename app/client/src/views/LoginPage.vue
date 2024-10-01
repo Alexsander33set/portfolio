@@ -106,7 +106,7 @@ const login = function() {
 </script>
 
 <template>
-  <main class="container flex flex-col items-center justify-center h-screen bg-slate-700 dark:bg-slate-900 transition-colors">
+  <main class="flex flex-col items-center justify-center h-screen bg-slate-700 dark:bg-slate-900 transition-colors">
     <template v-if="maxLoginAttemptsReached.value">
       <Alert variant="destructive">
         <Icon icon="lucide:alert-circle" class="w-4 h-4" />
@@ -117,7 +117,7 @@ const login = function() {
       </Alert>
     </template>
 
-    <form @submit.prevent="login" class="flex flex-col gap-4 p-8 border rounded-md shadow-sm bg-white dark:text-black">
+    <form @submit.prevent="login" class="flex flex-col gap-4 p-8 min-w-80 border rounded-md shadow-sm bg-white dark:text-black">
       <h1 class="text-2xl font-bold">Login</h1>
       <div class="grid items-center gap-1.5">
         <Label for="email">Email</Label>
@@ -128,7 +128,7 @@ const login = function() {
         <Label for="password">Password</Label>
         <Input id="password" type="password" v-model="password" placeholder="Password" />
       </div>
-      <div class="grid">
+      <div class="grid mt-2">
         <Button type="submit" variant="outline" class="dark:text-white">Login</Button>
       </div>
     </form>
