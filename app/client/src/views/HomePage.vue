@@ -3,6 +3,20 @@ import axios from 'axios'
 import { ref } from 'vue'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@iconify/vue'
+
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+
+const devEnvAlert = ref(true)
+const setDevEnvAlert = () => {
+  console.log("setDevEnvAlert called")
+  devEnvAlert.value = !devEnvAlert.value
+  localStorage.setItem('devEnvAlert', JSON.stringify(devEnvAlert.value))
+}
+if (localStorage.getItem('devEnvAlert')){
+  devEnvAlert.value = JSON.parse(localStorage.getItem('devEnvAlert'))
+}
+
+
 import ProjectList from '@/components/ProjectList.vue'
 
 const TOFisOpen = ref(false)
@@ -72,9 +86,23 @@ projects.value = getProjects()
 
 <template>
   <main class="relative scroll-smooth scroll-pt-12 overflow-x-hidden">
-    <section id="presentation" class="mt-20 container flex flex-col justify-center relative">
-      <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Alexsander Patrick Ferreira Santos</h1>
-      <h2 class="text-xl">{{ $t('presentation.subtitle') }}</h2>
+    <section id="temp" v-if="devEnvAlert" class="container mt-2 -mb-4">
+      <Alert>
+        <Icon icon="mdi:alert-circle-outline" class="w-4 h-4"/>
+        <AlertTitle>
+          Application under development
+          <Button class="float-right" variant="outline" size="icon" @click="setDevEnvAlert()">
+            <Icon icon="mdi:close" class="w-4 h-4"/>
+          </Button>
+        </AlertTitle>
+        <AlertDescription>
+          This application is under development and may not work as expected.
+        </AlertDescription>
+      </Alert>
+    </section>
+    <section id="presentation" class="mt-16 container flex flex-col justify-center relative">
+      <h1 class="font-bold tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Alexsander Patrick Ferreira Santos</h1>
+      <h2 class="text-2xl mt-1">{{ $t('presentation.subtitle') }}</h2>
       <p class="py-4 mb-4 w-1/2 text-lg font-normal text-gray-500 dark:text-gray-400">
         {{ $t('presentation.description') }}
       </p>
