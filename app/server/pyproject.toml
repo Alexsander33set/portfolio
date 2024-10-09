@@ -1,0 +1,8 @@
+[project]
+name = "portfolio"
+description = ""
+authors = [
+  {name = "Alexsander P.F. Santos", email = "alexsander.patrick@gmail.com" }
+]
+version = "0.1"
+readme = "README.md"

@@ -1,0 +1,14 @@
+Flask
+Flask-Cors
+python-dotenv
+
+#* WSGI
+gunicorn
+
+toml
+
+#* DB
+pymongo
+
+#* JWT
+pyjwt

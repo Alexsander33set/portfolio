@@ -1,9 +1,21 @@
 #* IDE
 .vscode
+.idea
 
 #* virtual Envirement
 node_modules
 .env
+venv
+.venv
+*.local
+
+#* Python
+__pycache__
+
+*.egg-info
+build
 
 #* Documentation
 .obsidian
+
+#* Others
