@@ -20,21 +20,24 @@ if (localStorage.getItem('devEnvAlert')){
 import ProjectList from '@/components/ProjectList.vue'
 
 const TOFisOpen = ref(false)
+const projects = ref([])
 
 async function getProjects(){
-  await axios.get("/api/projects")
-    .then((res)=>{
-      if (res.status != 200 || res.headers['Content-Type'] != "application/json"){
+  try{
+    let response = await axios.get("http://127.0.0.1:8080/api/projects")
+      console.log(response)
+      if (response.status != 200 || response['headers']['content-type'] != "application/json"){
         console.warn(">> Invalid Request <<")
-        return null
-      } else {return res.data}
-  }).catch((err) =>{
+      } else {
+        return projects.value = response.data
+      }
+  } catch (err) {
     console.error(err)
-  })
+  }
 }
 
 /** mockup */
-const projects = ref([
+projects.value = [
     {
         "_id": "66baecd6ed46e383b86a5484",
         "name": "Weather Forecast",
@@ -77,11 +80,9 @@ const projects = ref([
         "is_private": false,
         "created_at": 1723528108
     }
-])
+]
 
 projects.value = getProjects()
-
-
 </script>
 
 <template>
