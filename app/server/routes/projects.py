@@ -3,6 +3,7 @@ import logging
 from flask import Blueprint, request, jsonify, Response
 import datetime
 
+from decorators import login_required
 from models.Projects import Projects
 
 
@@ -27,6 +28,7 @@ def get_project_route(slug):
   return Response(project, mimetype='application/json')
 
 @projects.route('/api/add-project')
+@login_required
 def set_project():
   example = {
     "name": "Weather Forecast",
