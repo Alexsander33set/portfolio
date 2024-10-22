@@ -3,8 +3,6 @@ from flask import Flask
 #*
 import logging
 
-from decorators import login_required
-
 logging.getLogger().setLevel(logging.INFO)
 #*
 from dotenv import load_dotenv
@@ -23,11 +21,6 @@ app = Flask(__name__)
 app.register_blueprint(client)
 app.register_blueprint(projects)
 app.register_blueprint(auth, url_prefix='/auth')
-
-@app.route('/admin', methods=['GET'])
-@login_required
-def admin():
-    return 'Admin'
 
 if __name__ == '__main__':
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
