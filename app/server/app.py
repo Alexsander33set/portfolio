@@ -12,7 +12,6 @@ load_dotenv()
 from routes.client import client
 from routes.projects import projects
 from routes.auth import auth
-from utils.jwt import token_required
 
 PORT = int(os.getenv('PORT', default=80))
 app = Flask(__name__)
