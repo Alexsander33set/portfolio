@@ -102,7 +102,7 @@ projects.value = getProjects()
       </Alert>
     </section>
     <section id="presentation" class="mt-16 container flex flex-col justify-center relative">
-      <h1 class="font-bold tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Alexsander Patrick Ferreira Santos</h1>
+      <h1 class="font-semibold tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Alexsander Patrick Ferreira Santos</h1>
       <h2 class="text-2xl mt-1">{{ $t('presentation.subtitle') }}</h2>
       <p class="py-4 mb-4 w-1/2 text-lg font-normal text-gray-500 dark:text-gray-400">
         {{ $t('presentation.description') }}
@@ -111,14 +111,14 @@ projects.value = getProjects()
 
     <section id="skills" class="container mt-12">
       <h2 class="text-xl">{{ $t('skills.title') }}</h2>
-      <div class="flex flex-wrap gap-4 items-center mt-4 text-gray-700">
-        <article class="flex items-center gap-2 py-4 px-8 text-lg rounded-sm border">
+      <div class="flex flex-wrap gap-4 items-center mt-4 text-gray-700 dark:text-gray-100">
+        <article class="flex items-center gap-2 py-4 px-8 text-lg rounded-sm border hover:scale-105 transition-transform">
             <Icon icon="mdi:eye-outline" /> {{ $t('skills.list.accessibility') }}
         </article>
-        <article class="flex items-center gap-2 py-4 px-8 text-lg rounded-sm border">
+        <article class="flex items-center gap-2 py-4 px-8 text-lg rounded-sm border hover:scale-105 transition-transform">
             <Icon icon="mdi:shield-check-outline" /> {{ $t('skills.list.security') }}
         </article>
-        <article class="flex items-center gap-2 py-4 px-8 text-lg rounded-sm border">
+        <article class="flex items-center gap-2 py-4 px-8 text-lg rounded-sm border hover:scale-105 transition-transform">
             <Icon icon="mdi:server" /> {{ $t('skills.list.devops') }}
         </article>
       </div>
