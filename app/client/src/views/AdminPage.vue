@@ -78,7 +78,6 @@ const filteredFrameworks = computed(() => frameworks.filter(i => !modelValue.val
 </script>
 
 <template>
-  <main class="container">  
     <template v-if="!token">
       <Alert variant="destructive" class="m-4">
         <Icon icon="lucide:alert-circle" class="w-4 h-4" />
@@ -92,6 +91,7 @@ const filteredFrameworks = computed(() => frameworks.filter(i => !modelValue.val
     <template v-else>
       <h1>Admin Page</h1>
     </template>
+  <main class="container flex-1">
       <hr>
     <h3>Input projects</h3>
     {{ projectStructure }}

@@ -26,4 +26,13 @@ import FooterComponent from './components/layout/FooterComponent.vue'
   opacity: 0;
   transform: translate(100%, 100%);
 }
+
+#app{
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
 </style>

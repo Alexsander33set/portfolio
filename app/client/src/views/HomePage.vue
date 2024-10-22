@@ -86,7 +86,7 @@ projects.value = getProjects()
 </script>
 
 <template>
-  <main class="relative scroll-smooth scroll-pt-12 overflow-x-hidden">
+  <main class="relative scroll-smooth scroll-pt-12 flex-1 dark:text-gray-100">
     <section id="temp" v-if="devEnvAlert" class="container mt-2 -mb-4">
       <Alert>
         <Icon icon="mdi:alert-circle-outline" class="w-4 h-4"/>
