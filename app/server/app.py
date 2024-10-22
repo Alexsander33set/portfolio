@@ -13,8 +13,11 @@ from routes.client import client
 from routes.projects import projects
 from routes.auth import auth
 
-PORT = int(os.getenv('PORT', default=80))
 app = Flask(__name__)
+
+app.secret_key = os.getenv('SECRET_KEY')
+
+app.debug = True if os.getenv('ENV_TYPE') == 'dev' else False
 
 #* == Blueprints =============================================
 app.register_blueprint(client)
@@ -22,11 +25,5 @@ app.register_blueprint(projects)
 app.register_blueprint(auth, url_prefix='/auth')
 
 if __name__ == '__main__':
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-    app.secret_key = os.getenv('SECRET_KEY')
-    
-    logging.info(app.config['SECRET_KEY'])
-    logging.info(app.secret_key)
-    
-    app.debug = True if os.getenv('ENV_TYPE') == 'dev' else False
+    PORT = int(os.getenv('PORT', default=80))
     app.run(host='0.0.0.0',port=PORT)
