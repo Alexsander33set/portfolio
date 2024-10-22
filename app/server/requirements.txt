@@ -5,10 +5,10 @@ python-dotenv
 #* WSGI
 gunicorn
 
-toml
-
 #* DB
 pymongo
 
-#* JWT
-pyjwt
+#* Google OAuth
+Flask-OAuthlib
+google-auth
+google-auth-oauthlib

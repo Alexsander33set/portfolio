@@ -71,7 +71,7 @@ const filter = {
 </script>
 
 <template>
-  <main class="p-8 min-h-dvh">
+  <main class="p-8 flex-1">
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>

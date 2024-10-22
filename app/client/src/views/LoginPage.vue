@@ -106,7 +106,7 @@ const login = function() {
 </script>
 
 <template>
-  <main class="flex flex-col items-center justify-center h-screen bg-slate-700 dark:bg-slate-900 transition-colors">
+  <main class="flex flex-col items-center justify-center h-screen bg-slate-700 dark:bg-slate-900 transition-colors flex-1">
     <template v-if="maxLoginAttemptsReached.value">
       <Alert variant="destructive">
         <Icon icon="lucide:alert-circle" class="w-4 h-4" />
