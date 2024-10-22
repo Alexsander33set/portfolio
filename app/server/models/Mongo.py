@@ -3,7 +3,6 @@ import os
 from typing import Any, Dict
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
-from pymongo.database import Database
 
 #* =====================================================
 

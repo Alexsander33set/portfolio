@@ -27,6 +27,7 @@ if __name__ == '__main__':
     
     logging.info(app.config['SECRET_KEY'])
     logging.info(app.secret_key)
+    print("SECRET_KEY:", app.secret_key)
     
     app.debug = True if os.getenv('ENV_TYPE') == 'dev' else False
     app.run(host='0.0.0.0',port=PORT)
