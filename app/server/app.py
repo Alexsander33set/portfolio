@@ -23,5 +23,6 @@ app.register_blueprint(auth, url_prefix='/auth')
 
 if __name__ == '__main__':
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    app.secret_key = os.getenv('SECRET_KEY')
     app.debug = True if os.getenv('ENV_TYPE') == 'dev' else False
     app.run(host='0.0.0.0',port=PORT)
