@@ -134,19 +134,26 @@ console.log(projects.value)
       :projects="projects"
       :title="$t('projects.title')" />
 
-    <section id="contacts" class="mt-12 container flex items-center justify-center">
-      <h2 class="text-xl">{{ $t('contacts.title') }}:</h2>
-      <span class="flex gap-2">
+
+    <section id="contacts" class="mt-12 container grid items-center">
+      <h2 class="text-xl text-center">{{ $t('contacts.title') }}</h2>
+      <span class="flex justify-center gap-2 mt-2">
         <a href="https://www.linkedin.com/in/alexsander-patrick-ferreira-santos-5ba0841ba/" target="_blank">
           <Button variant="outline" class="m-2">
-              <Icon icon="fa6-brands:linkedin" />
-            &nbsp;Alexsander Patrick Ferreira Santos
+            <Icon icon="fa6-brands:linkedin" />
+            &nbsp;Linkedin
           </Button>
         </a>
         <a href="https://github.com/Alexsander33set" target="_blank">
           <Button variant="outline" class="m-2">
               <Icon icon="fa6-brands:github" />
-              &nbsp;Alexsander33set
+              &nbsp;GitHub
+          </Button>
+        </a>
+        <a href="mailto:alexsander.patrick@gmail.com" target="_blank">
+          <Button variant="outline" class="m-2">
+              <Icon icon="mdi:mail" />
+              &nbsp;Email
           </Button>
         </a>
       </span>
