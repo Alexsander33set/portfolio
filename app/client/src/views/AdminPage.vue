@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import axios from 'axios'
+
 //* ===== Shadcn =====
 import { Icon } from '@iconify/vue'
 import { Input } from '@/components/ui/input'
@@ -13,17 +13,19 @@ import { Switch } from '@/components/ui/switch'
 import {
   Table,
   TableBody,
-  TableCaption,
+  // TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Select,SelectContent,SelectGroup,SelectItem,SelectLabel,SelectTrigger,SelectValue } from '@/components/ui/select'
+import { Select,SelectContent,SelectGroup,SelectItem,/*SelectLabel,*/SelectTrigger,SelectValue } from '@/components/ui/select'
 import { ComboboxAnchor, ComboboxContent, ComboboxInput, ComboboxPortal, ComboboxRoot } from 'radix-vue'
 import { CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
 import { TagsInput, TagsInputInput, TagsInputItem, TagsInputItemDelete, TagsInputItemText } from '@/components/ui/tags-input'
 
+
+//* =============== Projects ===============
 
 const projects = ref([
   {
@@ -54,35 +56,95 @@ const projects = ref([
   }
 ])
 
-const projectStructure = ref(
-  {
-    "_id": "66baecd6ed46e383b86a5484",
-    "created_at": "",
-    "description": "something",
-    "github": "github.com/Alexsander33set/weather-forecast-project",
-    "is_private": false,
-    "name": "Weather Forecast",
-    "slug": "weather-forecast",
-    "status": "done",
-    "technologies": [
-      "java",
-      "node",
-      "python"
-    ],
-    "url": "apfs.com.br"
-  })
+const projectsMockup = [
+    {
+        "_id": "66baecd6ed46e383b86a5484",
+        "name": "Weather Forecast",
+        "slug": "weather-forecast",
+        "description": "something",
+        "technologies": [
+            "java",
+            "node",
+            "python"
+        ],
+        "url": "www.apfs.com.br",
+        "is_private": false,
+        "created_at": 1723526343.82374
+    },
+    {
+        "_id": "66baf3812ffa799538467a33",
+        "name": "Weather Forecast",
+        "slug": "weather-forecast",
+        "description": "something",
+        "technologies": [
+            "java",
+            "node",
+            "python"
+        ],
+        "url": "www.apfs.com.br",
+        "is_private": false,
+        "created_at": 1723528060
+    },
+    {
+        "_id": "66baf3b55b1172f323a2cc99",
+        "name": "Weather Forecast",
+        "slug": "weather-forecast",
+        "description": "something",
+        "technologies": [
+            "java",
+            "node",
+            "python"
+        ],
+        "url": "www.apfs.com.br",
+        "is_private": false,
+        "created_at": 1723528108
+    }
+]
 
-const project = ref({
-  name: "",
-  slug: "",
-  description: "",
-  github: "",
-  is_private: "",
-  url: "",
-  technologies: [],
-  status: "",
-  image: ""
-})
+async function getProjects(){
+  try{
+    // to test at local env running server: http://localhost:80
+    let response = await axios.get("/api/projects")
+    let {data, headers, status} = response
+
+    if (status == 200 || headers['content-type'] == "application/json"){
+      projects.value = data
+    } else {
+      console.warn(">> Invalid Request <<")
+      projects.value = null
+    }
+  } catch (err) {
+    console.error(err)
+    // projects.value = null
+    projects.value = projectsMockup
+  }
+}
+
+//* =============== Projects Operations ===============
+
+function editProject(projectName) {
+  console.log("edit: " + projectName)
+/**
+  [x] Get project name
+  [ ] Select the project from the list
+  [ ] Populate the form
+  [ ] Open  the form
+*/
+}
+
+function deleteProject(projectName){
+  console.log("delete: " +  projectName)
+  /**
+  [x] Get project name
+  [ ] Send a double check
+  [ ] Validade
+  [ ] call delete project api
+*/
+  // axios.delete("http://localhost:80/api/delete-project/",{data: {name: projectName}}) 
+}
+
+
+//* =============== Form ===============
 
 const form = ref({
   data: {},
@@ -118,6 +180,11 @@ const open = ref(false)
 const searchTerm = ref('')
 
 const filteredFrameworks = computed(() => frameworks.filter(i => !modelValue.value.includes(i.label)))
+
+
+getProjects()
+
+
 </script>
 
 <template>
@@ -137,23 +204,25 @@ const filteredFrameworks = computed(() => frameworks.filter(i => !modelValue.val
             </TableHead>
             <TableHead>Status</TableHead>
             <TableHead>GitHub</TableHead>
-            <TableHead>
-              URL
-            </TableHead>
+            <TableHead>URL</TableHead>
             <TableHead class="text-center">Edit</TableHead>
             <TableHead class="text-center">Delete</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow v-for="project in projects" :key="project._id">
+          <TableRow v-for="(project, i) in projects" :key="i">
             <TableCell class="font-medium">
               {{ project.name }}
             </TableCell>
             <TableCell>{{ project.status }}</TableCell>
             <TableCell>
+              <template v-if="project.github">
               <a :href="project.github" class="hover:text-blue-500 transition-colors">
                 {{ (project.github.split('/')[project.github.split('/').length - 1]) }}
               </a>
+              </template>
+              <template v-else><p class="text-gray-600">None</p></template>
+              
             </TableCell>
             <TableCell>
               <a v-if="project.url" :href="project.url" class="hover:text-blue-500 transition-colors">{{ project.url
@@ -161,12 +230,12 @@ const filteredFrameworks = computed(() => frameworks.filter(i => !modelValue.val
               <p v-else class="text-gray-600">None</p>
             </TableCell>
             <TableCell class="text-center">
-              <Button variant="outline">
+              <Button @click="editProject(project.slug)" variant="outline">
                 <Icon icon="mdi:edit-outline" class="-m-1 scale-125" />
               </Button>
             </TableCell>
             <TableCell class="text-center">
-              <Button variant="outline">
+              <Button @click="deleteProject(project.slug)" variant="outline">
                 <Icon icon="mdi:delete-outline" class="-m-1 scale-125 text-red-600 dark:text-red-400" />
               </Button>
             </TableCell>

@@ -22,9 +22,10 @@ import ProjectList from '@/components/ProjectList.vue'
 const TOFisOpen = ref(false)
 const projects = ref([])
 
-function getProjects(){
+async function getProjects(){
   try{
-    let response = axios.get("/api/projects")
+    // to test at local env running server: http://localhost:80
+    let response = await axios.get("/api/projects")
     let {data, headers, status} = response
 
     if (status == 200 || headers['content-type'] == "application/json"){
@@ -44,9 +45,9 @@ function getProjects(){
 const projectsMockup = [
     {
         "_id": "66baecd6ed46e383b86a5484",
-        "name": "Weather Forecast",
-        "slug": "weather-forecast",
-        "description": "something",
+        "name": "projectsMockup",
+        "slug": "projects-mockup",
+        "description": "projectsMockup",
         "technologies": [
             "java",
             "node",
