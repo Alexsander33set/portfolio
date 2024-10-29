@@ -28,7 +28,7 @@ async function getProjects(){
     let response = await axios.get("/api/projects")
     let {data, headers, status} = response
 
-    if (status == 200 || headers['content-type'] == "application/json"){
+    if (status == 200 && headers['content-type'] == "application/json"){
       projects.value = data
     } else {
       console.warn(">> Invalid Request <<")
