@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button'
 import { Icon } from '@iconify/vue'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Card, CardTitle, CardContent, CardDescription, CardFooter, CardHeader}
+from '@/components/ui/card'
 
 const devEnvAlert = ref(true)
 const setDevEnvAlert = () => {
@@ -161,11 +163,47 @@ console.log(projects.value)
           </Button>
         </a>
       </span>
-      <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light"
+
+
+      <section class="flex gap-6 justify-center mb-8">
+        <Card class="aspect-[5/6] w-[250px] flex flex-col">
+          <CardHeader>
+            <CardTitle class="">LinkedIn</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <img src="https://media.licdn.com/dms/image/v2/C5603AQEAF-rqzRNM1g/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1640883574386?e=2147483647&v=beta&t=GELyliHb8_HPdiaTcbM1xWhpi04uBigfsD2lk493Ig4"
+            class="aspect-square h-14 rounded-full"
+            alt="Alexsander Patrick Ferreira Santos">
+            <h4 class="font-semibold">Alexsander Patrick Ferreira Santos</h4>
+            <p class="text-sm">Full Stack Developer | DevOps | Web Developer</p>
+          </CardContent>
+          <CardFooter class="flex-1">
+            <a href="https://www.linkedin.com/in/alexsander-p-f-santos/" target="_blank" class="ml-auto"><Button variant="outline" class="text-blue-600 dark:text-blue-400">View Profile</Button></a>
+          </CardFooter>
+        </Card>
+        
+        <Card class="aspect-[5/6] w-[250px] flex flex-col">
+          <CardHeader>
+            <CardTitle class="">GitHub</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <img src="https://avatars.githubusercontent.com/u/82063944?v=4"
+            class="aspect-square h-14 rounded-full"
+            alt="Alexsander Patrick Ferreira Santos">
+            <h4 class="font-semibold">Sander</h4>
+            <p class="text-sm">Alexsander33set</p>
+          </CardContent>
+          <CardFooter class="flex-1">
+            <a href="https://github.com/Alexsander33set" target="_blank" class="ml-auto"><Button variant="outline">View Profile</Button></a>
+          </CardFooter>
+        </Card>
+
+        <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light"
         data-type="VERTICAL" data-vanity="alexsander-patrick-ferreira-santos-5ba0841ba" data-version="v1">
-        <a class="badge-base__link LI-simple-link"
-          href="https://br.linkedin.com/in/alexsander-patrick-ferreira-santos-5ba0841ba?trk=profile-badge"></a>
-      </div>
+          <a class="badge-base__link LI-simple-link"
+            href="https://br.linkedin.com/in/alexsander-patrick-ferreira-santos-5ba0841ba?trk=profile-badge"></a>
+        </div>
+      </section>
     </section>
 
     <div class="absolute top-20 -right-2 hover:-right1 p-2 hover:scale-105 cursor-pointer border rounded-sm text-center duration-300 hover:shadow-md opacity-50 hover:opacity-100 transition-all"
