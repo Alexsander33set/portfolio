@@ -1,6 +1,9 @@
 <script setup>
 import axios from 'axios'
 import { ref } from 'vue'
+
+import "./linkedinScript.js"
+
 import { Button } from '@/components/ui/button'
 import { Icon } from '@iconify/vue'
 
@@ -158,6 +161,11 @@ console.log(projects.value)
           </Button>
         </a>
       </span>
+      <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light"
+        data-type="VERTICAL" data-vanity="alexsander-patrick-ferreira-santos-5ba0841ba" data-version="v1">
+        <a class="badge-base__link LI-simple-link"
+          href="https://br.linkedin.com/in/alexsander-patrick-ferreira-santos-5ba0841ba?trk=profile-badge"></a>
+      </div>
     </section>
 
     <div class="absolute top-20 -right-2 hover:-right1 p-2 hover:scale-105 cursor-pointer border rounded-sm text-center duration-300 hover:shadow-md opacity-50 hover:opacity-100 transition-all"
