@@ -24,6 +24,17 @@ module.exports = {
     },
     extend: {
       colors: {
+        'jasper-100': '#F6DAD7',
+        'jasper-200': '#EEB5AF',
+        'jasper-300': '#E59088',
+        'jasper-400': '#DD6B60',
+        'jasper-450': '#D8594C',
+        'jasper-500': '#D44638',
+        'jasper-550': '#BF3F32',
+        'jasper-600': '#6A231C',
+        'jasper-700': '#7F2A22',
+        'jasper-800': '#551C16',
+        'jasper-900': '#2A0E0B',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
