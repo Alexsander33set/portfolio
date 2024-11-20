@@ -34,7 +34,7 @@ import {
       <h1 class="opacity-0 absolute pointer-events-none">APFS</h1>
     </RouterLink>
     <nav class="inline-flex gap-2 items-center p-1 text-nowrap">
-      <RouterLink to="/project/weather-forecast">Project X</RouterLink>
+      <!-- <RouterLink to="/project/weather-forecast">Project X</RouterLink> -->
       <Separator orientation="vertical" />
       <Select id="language-changer" v-model="prefStore.language">
         <SelectTrigger>
