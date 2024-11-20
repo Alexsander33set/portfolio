@@ -21,8 +21,8 @@ const props = defineProps({
 
       <template v-if="projects.length > 0">
         <div v-for="(project, index) in props.projects" :key="index"
-        class="shadow-[0_0px_3px_0px_rgba(0,0,0,0.3)] p-4 rounded-md">
-        <h3>{{ project.name }}</h3>
+        class="shadow-[0_0px_3px_0px_rgba(127,127,127,0.5)] p-4 rounded-md">
+        <h3 class="text-lg">{{ project.name }}</h3>
         <p>{{ project.description }}</p>
         <p>Tecnologias: {{ project.technologies.join(', ') }}</p>
         <div class="flex gap-2 mt-4">
