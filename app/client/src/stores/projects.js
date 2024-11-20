@@ -85,7 +85,7 @@ export const useProjectsStore = defineStore('projects', () => {
   const getProjects = async () => {
     try {
       // to test at local env running server: http://localhost:80
-      let response = await axios.get("http://localhost/api/projects")
+      let response = await axios.get("/api/projects")
       let { data, headers, status } = response
 
       if (status == 200 && headers['content-type'] == "application/json") {
