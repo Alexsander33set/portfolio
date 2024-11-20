@@ -12,33 +12,41 @@ projects_service = Projects()
 
 projects = Blueprint('projects', __name__)
 
-@projects.route('/api/projects')
+@projects.route('/api/projects', methods=['GET'])
 def get_projects_route():
-  projects = projects_service.get_projects()
-  return Response(projects, mimetype='application/json')
+  projects_list = projects_service.get_projects()
+  return Response(projects_list, mimetype='application/json')
 
-@projects.route('/api/project/<slug>')
+@projects.route('/api/project/<slug>', methods=['GET'])
 def get_project_route(slug):
   if not slug:
     return jsonify({"error":"project not defined"}), 400
-  
-  logging.info(slug)
-  
+
   project = projects_service.get_project(slug)
   return Response(project, mimetype='application/json')
 
-@projects.route('/api/add-project')
+@projects.route('/api/add-project', methods=['POST'])
 @login_required
 def set_project():
-  example = {
-    "name": "Weather Forecast",
-    "slug": "weather-forecast",
-    "description": "something",
-    "technologies": ["java", "node", "python"],
-    "url": "www.apfs.com.br",
-    "is_private": False,
-    "created_at": int(datetime.datetime.now().timestamp())
-  }
+  try:
+    project = request.get_json()
+    projects_service.add_project(project)
+    return Response(response="Created", status=201)
+  except Exception as error:
+    logging.error(error)
+    return Response(response="Error", status=400)
 
+@projects.route('/api/edit-project/<project_id>', methods=['PUT'])
+@login_required
+def edit_project(project_id):
+  return project_id
 
-  return projects_service.add_project(example)
+@projects.route('/api/delete-project/<project_id>', methods=['DELETE'])
+@login_required
+def delete_project(project_id):
+  try:
+    projects_service.delete_project(project_id)
+    return Response(response="Done", status=200)
+  except Exception as error:
+    logging.error(error)
+    return Response(response="Error", status=400)
