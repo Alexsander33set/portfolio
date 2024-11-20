@@ -71,16 +71,16 @@ const filter = {
 
           <div class="flex justify-start gap-2 mt-6">
             <RouterLink :to="'/project/'+project.slug">
-              <Button variant="outline">
+              <Button variant="outline" class="cursor-pointer">
                 {{ $t('projects.view') }}
               </Button>
             </RouterLink>
             <template v-if="!project.is_private">
-              <a v-if="project.github" :href="project.github" target="_blank" rel="noopener noreferrer">
+              <a v-if="project.github" :href="project.github" target="_blank" rel="noopener noreferrer" class="cursor-pointer">
                 <Button variant="outline"><Icon icon="mdi:github" /></Button>
               </a>
             </template>
-            <a v-if="project.url" :href="project.url" target="_blank" rel="noopener noreferrer">
+            <a v-if="project.url" :href="project.url" target="_blank" rel="noopener noreferrer" class="cursor-pointer">
               <Button variant="outline"><Icon icon="akar-icons:globe" /></Button>
             </a>
           </div>
