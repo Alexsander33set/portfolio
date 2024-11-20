@@ -19,10 +19,14 @@ export const pt_br = {
     }
   },
   projects: {
-    view: 'Ver projeto',
+    view: 'Ver mais',
     title: 'Projetos',
-    github: 'Ver no GitHub'
   },
+  confirmDelition: {
+    title: 'Você tem certeza absoluta?',
+    description: 'Esta ação não pode ser desfeita. Isso excluirá permanentemente os dados deste projeto de nossos servidores.',
+    cancel: 'Cancelar',
+    confirm: 'Deletar'  },
   tableOfContents: {
     presentation: 'Apresentação',
     projects: 'Projetos',

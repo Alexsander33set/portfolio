@@ -19,9 +19,14 @@ export const en_us = {
     }
   },
   projects: {
-    view: 'View project',
+    view: 'More details',
     title: 'Projects',
-    github: 'View on GitHub'
+  },
+  confirmDelition: {
+    title: 'Are you absolutely sure?',
+    description: 'This action cannot be undone. This will permanently delete this project data from our servers.',
+    cancel: 'Cancel',
+    confirm: 'Confirm'
   },
   tableOfContents: {
     presentation: 'Presentation',
