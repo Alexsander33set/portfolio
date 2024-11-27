@@ -17,12 +17,13 @@ def get_projects_route():
   projects_list = projects_service.get_projects()
   return Response(projects_list, mimetype='application/json')
 
-@projects.route('/api/project/<slug>', methods=['GET'])
-def get_project_route(slug):
-  if not slug:
+@projects.route('/api/project/<project_id>', methods=['GET'])
+def get_project_route(project_id):
+  if not project_id:
     return jsonify({"error":"project not defined"}), 400
 
-  project = projects_service.get_project(slug)
+  project = projects_service.get_project_by_id(project_id)
+  logging.info(project)
   return Response(project, mimetype='application/json')
 
 @projects.route('/api/add-project', methods=['POST'])

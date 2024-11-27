@@ -3,6 +3,8 @@ import logging
 from flask import json
 from models.Mongo import MongoDB
 
+from bson.objectid import ObjectId
+
 class Projects(MongoDB):
     def __init__(self):
         # Connects to the "mydatabase" database and "projects" collection
@@ -11,7 +13,7 @@ class Projects(MongoDB):
     def get_projects(self):
         logging.debug(" >>=====  Get projects called =====<<")
         projects = self.find_all()
-        
+
         for project in projects:
             project['_id'] = str(project['_id'])  # Convert ObjectId to string
         return json.dumps(projects)
@@ -19,6 +21,11 @@ class Projects(MongoDB):
     def get_project(self, slug):
         logging.info(" >>=====  Get Project called =====<<")
         return self.find_one({'slug': slug})
+
+    def get_project_by_id(self, project_id):
+        """Retrieves a project by its ID"""
+        logging.info(" >>=====  Get Project by ID called =====<<")
+        return self.find_one({'_id': ObjectId(project_id)})
 
     def add_project(self, project_data):
         """Adds a new project"""
