@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia';
 
 //* ===== Pinia =====
 import { useProjectsStore } from '@/stores/projects'
-const { projects } = storeToRefs(useProjectsStore())
+const { projects, isFetchingProjects } = storeToRefs(useProjectsStore())
 
 //* ===== Shadcn =====
 import { Button } from '@/components/ui/button'
@@ -106,7 +106,7 @@ console.log(projects)
       <p class="text-base mt-4">{{ $t('skills.description') }}</p>
     </section>
 
-    <ProjectList v-if="projects" id="projects" class="container mt-12" :projects="projects"
+    <ProjectList v-if="projects" id="projects" class="container mt-12" :projects="projects" :isLoading="isFetchingProjects"
       :title="$t('projects.title')" />
 
 

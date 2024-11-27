@@ -1,10 +1,10 @@
 <script setup>
-import { defineProps } from 'vue'
 import { RouterLink } from 'vue-router'
 
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Icon } from '@iconify/vue'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const props = defineProps({
   projects: {
@@ -14,6 +14,10 @@ const props = defineProps({
   title: {
     type: String,
     default: 'Projetos'
+  },
+  isLoading: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -86,20 +90,30 @@ const filter = {
           </div>
         </div>
       </template>
-      <template v-else>
-        <div class="shadow-[0_0px_3px_0px_rgba(0,0,0,0.3)] p-4 rounded-md">
-          <h3>project.name</h3>
-          <p> project.description </p>
-          <p>Tecnologias:  project.technologies.join(', ') </p>
-          <div class="flex gap-2 mt-4">
-            <a href="#" target="_blank" rel="noopener noreferrer" class="w-full">
-              <Button variant="outline"> projects.github </Button>
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              <Button variant="outline"> projects.view </Button>
-            </a>
+      <template v-if="isLoading">
+        <div class="shadow-[0_0px_3px_0px_rgba(0,0,0,0.3)] p-4 rounded-md flex gap-4">
+          <div class="project-image">
+            <Skeleton class="h-[180px] w-[180px]"/>
+          </div>
+          <div class="text flex-1">
+            <Skeleton class="h-6 w-[250px]"/>
+            <p class="mt-2">
+              <Skeleton class="h-4 w-auto"/>
+              <Skeleton class="h-4 w-auto mt-1"/>
+            </p>
+            <p class="flex gap-2 mt-2">
+              <Skeleton class="h-4 w-[50px]"/>
+              <Skeleton class="h-4 w-[50px]"/>
+              <Skeleton class="h-4 w-[50px]"/>
+            </p>
+            <div class="flex justify-start gap-2 mt-4">
+              <Skeleton class="h-[36px] w-[87px]"/>
+              <Skeleton class="h-[36px] w-[48px]"/>
+              <Skeleton class="h-[36px] w-[48px]"/>
+            </div>
         </div>
-      </div>
+
+        </div>
       </template>
     </div>
   </div>
