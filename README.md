@@ -1,11 +1,11 @@
-# My Portfolio
+# My Portfolio (In development)
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/Alexsander33set/portfolio?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/Alexsander33set/portfolio?style=for-the-badge)
 
 ![Portfólio webpage](./docs/portfolio-page.png)
 
-> running at: [www.apfs.com.br](http://www.apfs.com.br)
+> running at: [apfs.com.br](https://apfs.com.br)
 
 ## 🚀 How to run the project
 
@@ -59,12 +59,13 @@ The following tools were used in the construction of the project:
 - Server
   - [Python](https://www.python.org/)
   - [Flask](https://flask.palletsprojects.com/en/2.4.x/)
+- Database
   - [MongoDB](https://www.mongodb.com/)
 
 ## 📡 Endpoints
 
-- `GET /api/project/<slug>`: Returns a specific project
-- `GET /api/projects`: Returns all projects
-- `POST /api/add-project`: Adds a new project
-- `POST /api/update-project/<slug>`: Updates a specific project
-- `POST /api/delete-project/<slug>`: Deletes a specific project
+- `GET    /api/project/<project_id>`: Returns a specific project
+- `GET    /api/projects`: Returns all projects
+- `POST   /api/add-project`: Adds a new project
+- `PUT    /api/update-project/<project_id>`: Updates a specific project
+- `DELETE /api/delete-project/<project_id>`: Deletes a specific project
