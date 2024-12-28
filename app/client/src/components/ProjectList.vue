@@ -61,7 +61,7 @@ const filter = {
           <div>
             <!-- <Skeleton id="getthis" class="h-[180px] w-[220px]"/> -->
             <img class="object-cover h-[180px] w-[220px]"
-              :src=" project.image || 'no-image.png'"
+              :src=" project.image || '/no-image.png'"
               alt="">
           </div>
           <div class="flex-1">
