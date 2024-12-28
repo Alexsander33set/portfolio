@@ -1,7 +1,5 @@
-import json
 import logging
 from flask import Blueprint, request, jsonify, Response
-import datetime
 
 from decorators import login_required
 from models.Projects import Projects
