@@ -17,7 +17,7 @@ export const useProjectsStore = defineStore('projects', () => {
 //* ========>> Projects  <<========
 
   const projects = ref([])
-  const isFetchingProjects = ref(false)
+  const isFetchingProjects = ref(undefined)
 
   const projectsMockup = [
     {
@@ -84,15 +84,14 @@ export const useProjectsStore = defineStore('projects', () => {
   ]
 
   const getProjects = async () => {
+    isFetchingProjects.value = true
     try {
-      isFetchingProjects.value = true
       // to test at local env running server: http://localhost:80
       let response = await axios.get("/api/projects")
       let { data, headers, status } = response
 
       if (status == 200 && headers['content-type'] == "application/json") {
         projects.value = data
-        isFetchingProjects.value = false
       } else {
         console.warn(">> Invalid Request <<")
         projects.value = null
@@ -102,6 +101,7 @@ export const useProjectsStore = defineStore('projects', () => {
       // projects.value = null
       projects.value = projectsMockup
     }
+    isFetchingProjects.value = false
   }
 
   getProjects()
