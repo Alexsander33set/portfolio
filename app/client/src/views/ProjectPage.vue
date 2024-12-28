@@ -1,8 +1,7 @@
 <script setup>
 
 import { ref, watch } from 'vue'
-import { RouterLink } from 'vue-router'
-import { useRoute } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
 const route = useRoute()
 //* ===== Pinia =====
 import { storeToRefs } from 'pinia';
