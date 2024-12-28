@@ -3,15 +3,17 @@ import logging
 from flask import json
 from models.Mongo import MongoDB
 
+from bson.objectid import ObjectId
+
 class Projects(MongoDB):
     def __init__(self):
-        # Connects to the "mydatabase" database and "projects" collection
+        # Connects to the database and "projects" collection
         super().__init__(collection_name="projects")
 
     def get_projects(self):
         logging.debug(" >>=====  Get projects called =====<<")
         projects = self.find_all()
-        
+
         for project in projects:
             project['_id'] = str(project['_id'])  # Convert ObjectId to string
         return json.dumps(projects)
@@ -19,6 +21,11 @@ class Projects(MongoDB):
     def get_project(self, slug):
         logging.info(" >>=====  Get Project called =====<<")
         return self.find_one({'slug': slug})
+
+    def get_project_by_id(self, project_id):
+        """Retrieves a project by its ID"""
+        logging.info(" >>=====  Get Project by ID called =====<<")
+        return self.find_one({'_id': ObjectId(project_id)})
 
     def add_project(self, project_data):
         """Adds a new project"""
@@ -32,10 +39,10 @@ class Projects(MongoDB):
 
     def delete_project(self, project_id):
         """Removes a project by ID"""
-        logging.info(" >>=====  Remove project called =====<<")
-        query = {'_id': project_id}
+        logging.info(f" >>=====  Remove project called for {project_id} =====<<")
+        query = {'_id':  ObjectId(project_id)}
         return self.delete_one(query)
-    
+
     def set_project_priority(self, slug, new_priority):
         logging.info(" >>=====  Set project priority called =====<<")
         return self.update_one({"slug": slug}, {"$set": {"priority": new_priority}})
@@ -56,7 +63,7 @@ class Projects(MongoDB):
 #    for project in projects:
 #        project['_id'] = str(project['_id'])  # Converter ObjectId para string
 #    return json.dumps(projects)
-#  
+#
 #  def get_project(slug:str):
 #    logging.info(" >>=====  Get Project called =====<<")
 #      project = projects_collection.find_one({"slug": slug})

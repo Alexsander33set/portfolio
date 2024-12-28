@@ -107,6 +107,16 @@ const login = function() {
 
 <template>
   <main class="flex flex-col items-center justify-center h-screen bg-slate-700 dark:bg-slate-900 transition-colors flex-1">
+    <template v-if="!token">
+      <Alert variant="destructive" class="m-4">
+        <Icon icon="lucide:alert-circle" class="w-4 h-4" />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>
+          Your session has expired. Please log in again.
+        </AlertDescription>
+      </Alert>
+    </template>
+    
     <template v-if="maxLoginAttemptsReached.value">
       <Alert variant="destructive">
         <Icon icon="lucide:alert-circle" class="w-4 h-4" />

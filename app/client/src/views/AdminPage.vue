@@ -1,7 +1,11 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { ref, computed } from 'vue'
+import { storeToRefs } from 'pinia';
+
+import { useProjectsStore } from '@/stores/projects'
+const { projects } = storeToRefs(useProjectsStore())
+const { deleteProject } = useProjectsStore()
+
 //* ===== Shadcn =====
 import { Icon } from '@iconify/vue'
 import { Input } from '@/components/ui/input'
@@ -13,82 +17,125 @@ import { Switch } from '@/components/ui/switch'
 import {
   Table,
   TableBody,
-  TableCaption,
+  // TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Select,SelectContent,SelectGroup,SelectItem,SelectLabel,SelectTrigger,SelectValue } from '@/components/ui/select'
+import { Select,SelectContent,SelectGroup,SelectItem,/*SelectLabel,*/SelectTrigger,SelectValue } from '@/components/ui/select'
 import { ComboboxAnchor, ComboboxContent, ComboboxInput, ComboboxPortal, ComboboxRoot } from 'radix-vue'
 import { CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
 import { TagsInput, TagsInputInput, TagsInputItem, TagsInputItemDelete, TagsInputItemText } from '@/components/ui/tags-input'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 
 
-const projects = ref([
-  {
-    "_id": "66baecd6ed46e383b86a5484",
-    "created_at": "",
-    "description": "something",
-    "github": "github.com/Alexsander33set/weather-forecast-project",
-    "is_private": false,
-    "name": "Weather Forecast",
-    "slug": "weather-forecast",
-    "status": "done",
-    "technologies": [
-      "java",
-      "node",
-      "python"
-    ],
-    "url": "apfs.com.br"
-  },
-  {
-    "_id": "66baecd6ed46e383b86a5484",
-    "created_at": "",
-    "description": "something",
-    "github": "github.com/Alexsander33set/weather-forecast-project",
-    "is_private": false,
-    "name": "Weather Forecast",
-    "slug": "weather-forecast",
-    "status ": "done"
-  }
-])
+//* =============== Projects ===============
 
-const projectStructure = ref(
-  {
-    "_id": "66baecd6ed46e383b86a5484",
-    "created_at": "",
-    "description": "something",
-    "github": "github.com/Alexsander33set/weather-forecast-project",
-    "is_private": false,
-    "name": "Weather Forecast",
-    "slug": "weather-forecast",
-    "status": "done",
-    "technologies": [
-      "java",
-      "node",
-      "python"
-    ],
-    "url": "apfs.com.br"
-  })
 
-const project = ref({
-  name: "",
-  slug: "",
-  description: "",
-  github: "",
-  is_private: "",
-  url: "",
-  technologies: [],
-  status: "",
-  image: ""
-})
+
+//* =============== Projects Operations ===============
+
+function editProject(projectName) {
+  console.log("edit: " + projectName)
+/**
+  [x] Get project name
+  [ ] Select the project from the list
+  [ ] Populate the form
+  [ ] Open  the form
+*/
+}
+
+function submitDeletion(projectName){
+  console.log("submitDeletion")
+
+
+  /**
+   * @param projectName
+  * [x] Get project name
+  * [ ] Send a double check
+  * [ ] Validade
+  */
+}
+
+
+//* =============== Form ===============
 
 const form = ref({
-  data: {},
+  data: {
+    name: "",
+    description: "",
+    image: "",
+    url: "",
+    github: "",
+    isPrivate: false,
+    technologies: [],
+    frameworks: [],
+    status: ""
+  },
   isOpen: false,
   process: ""
 })
+
+const formDataStructure = {
+  name: "",
+  description: "",
+  image: "",
+  url: "",
+  github: "",
+  isPrivate: false,
+  technologies: [],
+  frameworks: [],
+  status: ""
+}
+
+function clearFormData(){
+  form.value.data = {...formDataStructure}
+}
+
+function fillForm(projectSlug){
+  console.log("fillForm")
+  console.log(projectSlug)
+
+  let value = projects.value.filter((project) => project.slug == projectSlug)
+  console.log(value)
+}
+
+function openForm(type, projectSlug=null){
+  clearFormData()
+  if (projectSlug){fillForm(projectSlug)}
+  form.value.process = type
+  form.value.isOpen = true
+}
+
+function closeForm(){
+  clearFormData()
+  form.value.isOpen = false
+}
+
+function saveForm(){
+  switch (form.value.process){
+    case "create":
+      console.log("create")
+      break;
+    case "edit":
+      console.log("edit")
+      break;
+    default:
+      console.log("No conditions found")
+  }
+  closeForm()
+}
 
 const imageChanged = ref("#")
 function changeImage(event) {
@@ -107,10 +154,10 @@ const frameworks = [
   { value: 'astro', label: 'Astro' },
 ]
 const statusList = [
-  { value: 'planning', label: 'Planning' },  
-  { value: 'todo', label: 'To do' },
-  { value: 'doing', label: 'Doing' },
-  { value: 'done', label: 'Done' }
+  { value: 'Planning', label: 'Planning' },
+  { value: 'Todo', label: 'To do' },
+  { value: 'Doing', label: 'Doing' },
+  { value: 'Done', label: 'Done' }
 ]
 
 const modelValue = ref([])
@@ -137,58 +184,76 @@ const filteredFrameworks = computed(() => frameworks.filter(i => !modelValue.val
             </TableHead>
             <TableHead>Status</TableHead>
             <TableHead>GitHub</TableHead>
-            <TableHead>
-              URL
-            </TableHead>
+            <TableHead>URL</TableHead>
             <TableHead class="text-center">Edit</TableHead>
             <TableHead class="text-center">Delete</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow v-for="project in projects" :key="project._id">
+          <TableRow v-for="(project, i) in projects" :key="i">
             <TableCell class="font-medium">
               {{ project.name }}
             </TableCell>
             <TableCell>{{ project.status }}</TableCell>
             <TableCell>
+              <template v-if="project.github">
               <a :href="project.github" class="hover:text-blue-500 transition-colors">
                 {{ (project.github.split('/')[project.github.split('/').length - 1]) }}
               </a>
+              </template>
+              <template v-else><p class="text-gray-600">None</p></template>
+
             </TableCell>
             <TableCell>
-              <a v-if="project.url" :href="project.url" class="hover:text-blue-500 transition-colors">{{ project.url
-                }}</a>
+              <a v-if="project.url" :href="project.url" class="hover:text-blue-500 transition-colors">
+                {{ project.url.replace('https://','')}}
+              </a>
               <p v-else class="text-gray-600">None</p>
             </TableCell>
             <TableCell class="text-center">
-              <Button variant="outline">
+              <Button @click="openForm('edit', project.slug)" variant="outline">
                 <Icon icon="mdi:edit-outline" class="-m-1 scale-125" />
               </Button>
             </TableCell>
             <TableCell class="text-center">
-              <Button variant="outline">
-                <Icon icon="mdi:delete-outline" class="-m-1 scale-125 text-red-600 dark:text-red-400" />
-              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger>
+                  <Button variant="outline">
+                    <Icon icon="mdi:delete-outline" class="-m-1 scale-125 text-red-600 dark:text-red-400" />
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>{{ $t('confirmDelition.title') }}</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      {{ $t('confirmDelition.description') }}
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>{{ $t('confirmDelition.cancel') }}</AlertDialogCancel>
+                    <AlertDialogAction @click="deleteProject(project._id)">{{ $t('confirmDelition.confirm') }}</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </TableCell>
           </TableRow>
         </TableBody>
       </Table>
       <div class="h-10">
         <span class="float-right">
-          <Button @click="form.isOpen = true" class="flex gap-2 items-center p-2">
-            <Icon icon="mdi:plus-circle-outline" /> Add Project
+          <Button @click="openForm('create')" class="flex gap-2 items-center p-2">
+            <Icon icon="mdi:plus-circle-otline" /> Add Project
           </Button>
         </span>
       </div>
     </section>
-
 
     <form v-if="form.isOpen" class="my-10">
       <h3 class="text-3xl">Change App</h3>
       <section class="border p-4 mt-4 flex flex-col gap-2 rounded-md">
         <div class="flex items-center gap-1.5">
           <Label for="name">Name:</Label>
-          <Input id="name" type="text" v-model="project.name" placeholder="Project Name" />
+          <Input id="name" type="text" v-model="form.data.name" placeholder="Project Name" />
           <Select>
             <SelectTrigger class="w-[180px]">
               <SelectValue placeholder="Status" />
@@ -205,9 +270,9 @@ const filteredFrameworks = computed(() => frameworks.filter(i => !modelValue.val
         <section class="border rounded-sm my-1 p-4 py-2 transition-all delay-150 duration-500 flex flex-col gap-2">
             <div class="flex gap-2 items-center">
               <h5>Is Private?</h5>
-              <Switch v-model="form.data.is_private" @click="form.data.is_private = !form.data.is_private" />
+              <Switch v-model="form.data.isPrivate" @click="form.data.isPrivate = !form.data.isPrivate" />
             </div>
-            <section v-if="!form.data.is_private" class="flex flex-col gap-2 mt-2">
+            <section v-if="!form.data.isPrivate" class="flex flex-col gap-2 mt-2">
               <div>
                 <Label for="url">URL</Label>
                 <Input id="url" type="text" v-model="form.data.url" placeholder="https://url.com" />
@@ -221,7 +286,7 @@ const filteredFrameworks = computed(() => frameworks.filter(i => !modelValue.val
         </section>
         <div class="grid items-center gap-1.5">
           <Label for="description">Description</Label>
-          <Textarea id="description" v-model="project.description" placeholder="Project Description" />
+          <Textarea id="description" v-model="form.data.description" placeholder="Project Description" />
         </div>
         <div class="grid items-center gap-1.5">
           <Label for="name">Technologies</Label>
@@ -268,17 +333,13 @@ const filteredFrameworks = computed(() => frameworks.filter(i => !modelValue.val
           </TagsInput>
         </div>
         <div class="grid w-full max-w-sm items-center gap-1.5">
-          <Label for="status">Status</Label>
-          <Input id="status" type="text" v-model="project.status" placeholder="status" />
-        </div>
-        <div class="grid w-full max-w-sm items-center gap-1.5">
           <Label for="created_at">Iniciado em</Label>
-          <Input id="created_at" type="date" v-model="project.created_at" placeholder="dd/mm/aaaa" />
+          <Input id="created_at" type="date" v-model="form.data.created_at" placeholder="dd/mm/aaaa" />
         </div>
         <div class="grid w-full max-w-sm items-center gap-1.5">
           <Label for="picture">Foto</Label>
           <Input id="picture" type="file" accept="image/*" @change="changeImage" />
-          <template v-if="project.image">
+          <template v-if="form.data.image">
             <div>
               <p>Preview</p>
               <img :src="imageChanged" alt="pho">
@@ -287,8 +348,8 @@ const filteredFrameworks = computed(() => frameworks.filter(i => !modelValue.val
         </div>
       </section>
       <section class="mt-2 flex justify-end gap-4">
-        <Button class="float-right">Cancel</Button>
-        <Button class="float-right" type="submit">Save</Button>
+        <Button class="float-right" type="reset" @click="closeForm()">Cancel</Button>
+        <Button class="float-right" type="submit" @click="saveForm()">Save</Button>
       </section>
     </form>
   </main>

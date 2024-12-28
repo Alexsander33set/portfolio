@@ -1,14 +1,14 @@
-Flask
-Flask-Cors
-python-dotenv
+Flask >= 3.0.0
+Flask-Cors >=5.0.0
+python-dotenv # dev dependency
 
 #* WSGI
 gunicorn
 
 #* DB
-pymongo
+pymongo>=4.10.1
 
 #* Google OAuth
-Flask-OAuthlib
-google-auth
-google-auth-oauthlib
+Flask-OAuthlib>=0.9.6
+google-auth>=2.35.0
+google-auth-oauthlib>=1.2.1

@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n'
 
 
 export const usePreferencesStore = defineStore('preferences', () => {
+//* ========>> Language  <<========
   const { locale } = useI18n()
   console.log("locale: " + locale.value)
 
@@ -52,4 +53,5 @@ export const usePreferencesStore = defineStore('preferences', () => {
   return {
     language, acceptedLanguages
   }
+
 })

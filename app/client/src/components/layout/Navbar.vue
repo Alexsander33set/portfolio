@@ -34,17 +34,17 @@ import {
       <h1 class="opacity-0 absolute pointer-events-none">APFS</h1>
     </RouterLink>
     <nav class="inline-flex gap-2 items-center p-1 text-nowrap">
-      <!-- <RouterLink to="/project/weather-forecast">Project X</RouterLink> -->
+      <RouterLink to="/about">{{ $t('links.about')}}</RouterLink>
       <Separator orientation="vertical" />
       <Select id="language-changer" v-model="prefStore.language">
         <SelectTrigger>
           <SelectValue placeholder="Change language" />
         </SelectTrigger>
         <SelectContent>
-            <SelectItem class="flex" 
-              v-for="(language, index) in prefStore.acceptedLanguages" 
-              :key="index" 
-              :value="language.value"> 
+            <SelectItem class="flex"
+              v-for="(language, index) in prefStore.acceptedLanguages"
+              :key="index"
+              :value="language.value">
               <span class="flex items-center gap-1">
                 <Icon :icon="language.icon"/>
                 {{language.label}}
@@ -52,7 +52,7 @@ import {
             </SelectItem>
         </SelectContent>
       </Select>
-      
+
       <!-- <v-menu  transition="scale-transition" v-bind="props">
         <template v-slot:activator="{ props }">
           <v-btn icon="mdi-translate" v-bind="props" color="primary"></v-btn>
@@ -88,8 +88,14 @@ import {
 </template>
 
 
-<style scoped>
+<style >
 
+header nav a{
+  transition: opacity 0.3s;
+}
 
+header nav a:hover{
+  opacity: 0.8;
+}
 
 </style>
