@@ -50,7 +50,7 @@ class MongoDB:
         """Find a document into the collection"""
         return self.collection.find_one(query)
 
-    def find_all(self, query):
+    def find_all(self, query=None):
         """Find all the documents that match the query criteria"""
         return list(self.collection.find(query))
 
