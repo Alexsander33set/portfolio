@@ -22,9 +22,7 @@ import FooterComponent from './components/layout/FooterComponent.vue'
 
 .v-enter-from,
 .v-leave-to {
-  position: absolute;
   opacity: 0;
-  transform: translate(100%, 100%);
 }
 
 #app{
