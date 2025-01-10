@@ -27,7 +27,7 @@ jobs:
             git fetch --all
             git reset --hard origin/main
             
-            cd /app/server/
+            cd /var/www/portfolio/app/server/
             source venv/bin/activate
             pip install --no-cache-dir -r requirements.txt
             
