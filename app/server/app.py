@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 #*
 import logging
@@ -17,6 +18,8 @@ from routes.projects import projects
 from routes.auth import auth
 
 app = Flask(__name__)
+
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 if ENV_TYPE == 'dev':
     from flask_cors import CORS
