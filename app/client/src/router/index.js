@@ -38,7 +38,8 @@ const router = createRouter({
       path: '/login',
       name: 'Login',
       component: LoginPage
-    }
+    },
+    { path: '/:pathMatch(.*)*', redirect: '/' }
   ]
 })
 
