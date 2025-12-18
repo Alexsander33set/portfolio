@@ -1,0 +1,85 @@
+# ==============================================================================
+# Docker Compose for Hostinger Docker Manager
+# ==============================================================================
+# 
+# DEPLOYMENT INSTRUCTIONS FOR HOSTINGER VPS:
+# 
+# 1. Access Hostinger VPS Control Panel
+# 2. Navigate to "Docker Manager"
+# 3. Choose "Compose from URL" and use your GitHub repository URL
+#    OR copy this file content to "Compose manually"
+# 
+# 4. Set Environment Variables in Hostinger panel:
+#    - SECRET_KEY (generate with: openssl rand -hex 32)
+#    - MONGO_URL (your MongoDB Atlas connection string)
+#    - MONGO_DB_NAME (database name, e.g., "portfolio")
+#    - GOOGLE_CLIENT_ID (from Google Cloud Console)
+#    - GOOGLE_CLIENT_SECRET (from Google Cloud Console)
+#    - GOOGLE_REDIRECT_URI (e.g., https://apfs.com.br/auth/callback)
+# 
+# 5. Configure your domain DNS to point to the VPS IP
+# 6. Setup SSL/TLS using Hostinger's built-in tools or Cloudflare
+# 
+# ==============================================================================
+version: '3.8'
+
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio-app
+    restart: unless-stopped
+    ports:
+      - "8011:8011"
+    environment:
+      # App Configuration
+      - PORT=8011
+      - ENV_TYPE=prod
+      - SECRET_KEY=${SECRET_KEY}
+      
+      # Database
+      - MONGO_URL=${MONGO_URL}
+      - MONGO_DB_NAME=${MONGO_DB_NAME:-portfolio}
+      
+      # Google OAuth
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
+      - OAUTHLIB_INSECURE_TRANSPORT=0
+    
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+    
+    # Resource limits (adjust based on your VPS plan)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    
+    # Healthcheck
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8011/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    networks:
+      - portfolio-network
+
+networks:
+  portfolio-network:
+    driver: bridge

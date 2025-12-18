@@ -1,48 +1,85 @@
-# My Portfolio (In development)
+# My Portfolio
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/Alexsander33set/portfolio?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/Alexsander33set/portfolio?style=for-the-badge)
 
 ![Portfólio webpage](./docs/portfolio-page.png)
 
-> running at: [apfs.com.br](https://apfs.com.br)
+> Running at: [apfs.com.br](https://apfs.com.br)
 
-## 🚀 How to run the project
+## 🐳 Running with Docker (Recommended)
 
-### 🎲 Running the application (server + frontend)
+### Prerequisites
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+### Quick Start
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/Alexsander33set/portfolio.git
-# Access the folder of the project
-$ cd portfolio
-# Access the server folder
-$ cd app/server
-# Install dependencies
-$ pip install -r requirements.txt
-# Add environment variables
-$ cp .env.example .env
-# Run the application
-$ python3 app.py
-# The server will start at port:8080 - access http://localhost:8080
+git clone https://github.com/Alexsander33set/portfolio.git
+cd portfolio
+
+# Copy environment variables template
+cp .env.example .env
+
+# Edit .env with your credentials
+nano .env
+
+# Start with Docker (production mode)
+./docker.sh prod
+
+# Or start in development mode (with hot reload)
+./docker.sh dev
 ```
 
-### 🧭 Running the Frontend (client)
+### Docker Commands
+
+| Command | Description |
+|---------|-------------|
+| `./docker.sh dev` | Start development environment (frontend + backend with hot reload) |
+| `./docker.sh dev-detached` | Start development in background |
+| `./docker.sh prod` | Start production environment |
+| `./docker.sh prod-detached` | Start production in background |
+| `./docker.sh stop` | Stop all containers |
+| `./docker.sh logs` | View logs |
+| `./docker.sh build` | Build production image |
+| `./docker.sh clean` | Remove all containers and images |
+| `./docker.sh health` | Check application health |
+
+### Ports Used
+- **8011**: Backend API (production & development)
+- **5173**: Frontend dev server (development only)
+
+---
+
+## 🚀 Running without Docker (Manual Setup)
+
+### Backend (Python/Flask)
 
 ```bash
-# Access the client folder
-$ cd app/client
-
-# Install dependencies
-$ npm install
-
-# Run the application in development mode
-$ npm run dev
-
-# The frontend will start at port:5173 - access http://localhost:5173
+cd app/server
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.sample .env
+# Edit .env with your credentials
+python app.py
+# Server starts at http://localhost:8011
 ```
 
-## 🛠 Tecnologias
+### Frontend (Vue.js)
+
+```bash
+cd app/client
+npm install
+npm run dev
+# Frontend starts at http://localhost:5173
+```
+
+---
+
+## 🛠 Technologies
 
 The following tools were used in the construction of the project:
 

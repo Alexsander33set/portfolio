@@ -1,18 +1,21 @@
 import logging
 import os
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from pymongo.database import Database
 
 #* =====================================================
 
-MONGO_URL = os.getenv("MONGO_URL")
-if not MONGO_URL:
-    raise AttributeError("MONGO_URL not defined")
-MONGO_DB_NAME: str | Any = os.getenv("MONGO_DB_NAME")
-if not MONGO_DB_NAME:
-    raise AttributeError("MONGO_DB_NAME not defined")
+def _get_env_var(name: str) -> str:
+    """Get environment variable or raise error if not set."""
+    value = os.getenv(name)
+    if not value:
+        raise EnvironmentError(
+            f"Environment variable '{name}' is not set. "
+            "Please check your .env file or environment configuration."
+        )
+    return value
 
 #* project
 #*
@@ -28,18 +31,57 @@ if not MONGO_DB_NAME:
 
 
 class MongoDB:
+    _client: Optional[MongoClient] = None
+    _db: Optional[Database] = None
+    _initialized: bool = False
+    
     def __init__(self, collection_name: str):
-        self.client: MongoClient[Dict[str, Any]] = MongoClient(MONGO_URL, server_api=ServerApi('1'))
-
+        self._collection_name = collection_name
+        self._collection = None
+    
+    @classmethod
+    def _ensure_connection(cls):
+        """Lazy initialization of MongoDB connection - only connects when first needed."""
+        if cls._initialized:
+            return
+        
+        mongo_url = _get_env_var("MONGO_URL")
+        mongo_db_name = _get_env_var("MONGO_DB_NAME")
+        
+        cls._client = MongoClient(
+            mongo_url, 
+            server_api=ServerApi('1'),
+            serverSelectionTimeoutMS=5000,  # 5 second timeout for server selection
+            connectTimeoutMS=5000,  # 5 second connection timeout
+        )
+        
         try:
-            self.client.admin.command('ping')
+            cls._client.admin.command('ping')
             logging.info("Successfully connected to MongoDB!")
         except Exception as e:
-            logging.error("Failed to connect at MongoDB")
+            logging.error("Failed to connect to MongoDB")
             logging.error(e)
-
-        self.db = self.client[MONGO_DB_NAME]
-        self.collection = self.db[collection_name]
+            raise
+        
+        cls._db = cls._client[mongo_db_name]
+        cls._initialized = True
+    
+    @property
+    def client(self):
+        MongoDB._ensure_connection()
+        return MongoDB._client
+    
+    @property
+    def db(self):
+        MongoDB._ensure_connection()
+        return MongoDB._db
+    
+    @property
+    def collection(self):
+        if self._collection is None:
+            MongoDB._ensure_connection()
+            self._collection = MongoDB._db[self._collection_name]
+        return self._collection
 
     def insert_one(self, data):
         """Insert a document into the collection"""

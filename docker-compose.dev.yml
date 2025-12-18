@@ -1,0 +1,53 @@
+# ==============================================================================
+# Docker Compose Configuration for LOCAL DEVELOPMENT
+# ==============================================================================
+version: '3.8'
+
+services:
+  # Backend service
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: backend-dev
+    container_name: portfolio-backend-dev
+    restart: unless-stopped
+    ports:
+      - "8011:8011"
+    volumes:
+      - ./app/server:/app
+      - /app/__pycache__
+    environment:
+      - PORT=8011
+      - ENV_TYPE=dev
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-key-change-in-production}
+      - MONGO_URL=${MONGO_URL}
+      - MONGO_DB_NAME=${MONGO_DB_NAME:-portfolio}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI:-http://localhost:8011/auth/callback}
+      - OAUTHLIB_INSECURE_TRANSPORT=1
+    networks:
+      - portfolio-dev-network
+
+  # Frontend service (with hot reload)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: frontend-dev
+    container_name: portfolio-frontend-dev
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./app/client:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8011
+    networks:
+      - portfolio-dev-network
+
+networks:
+  portfolio-dev-network:
+    driver: bridge

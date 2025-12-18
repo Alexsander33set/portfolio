@@ -1,0 +1,64 @@
+# ==============================================================================
+# .dockerignore - Files to exclude from Docker build context
+# ==============================================================================
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Environment files (never include in image)
+.env
+.env.local
+.env.*.local
+
+# Node
+**/node_modules
+**/.npm
+**/npm-debug.log*
+
+# Python
+**/__pycache__
+**/*.py[cod]
+**/*$py.class
+**/*.so
+**/.Python
+**/venv
+**/env
+**/.venv
+**/*.egg-info
+**/.eggs
+
+# Build outputs (we build in Docker)
+app/server/template/
+dist/
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Test files
+**/*.test.js
+**/*.spec.js
+**/tests/
+**/test/
+
+# Local configs
+**/*.local.*
+**/ecosystem.config.js
+**/Makefile
+
+# Nginx configs (not needed in container)
+app/server/nginx/
+
+# Misc
+**/*.log
+**/*.tmp
+**/.DS_Store
+**/Thumbs.db

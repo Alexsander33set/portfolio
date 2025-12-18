@@ -1,23 +1,59 @@
-#* IDE
+# ==============================================================================
+# Git Ignore Configuration
+# ==============================================================================
+
+# Environment files (NEVER commit these!)
+.env
+.env.local
+.env.*
+.env.*.local
+*.env
+!.env.example
+!.env.*.example
+
+# IDE
 .vscode
 .idea
+*.swp
+*.swo
 
-#* virtual Envirement
+# Virtual Environment
 node_modules
-.env
 venv
 .venv
-*.local
+env
 
-#* Python
+# Python
 __pycache__
 .mypy_cache
-
+*.py[cod]
+*$py.class
+*.so
 *.egg-info
+.eggs
 build
+dist
 
-#* Documentation
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Documentation
 .obsidian
 
-#* Others
+# Docker
+*.tar.gz
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+.coverage
+htmlcov/
+.pytest_cache
+
+# Others
 deploy-test.yml

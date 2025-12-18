@@ -1,14 +1,22 @@
-Flask >= 3.0.0
-Flask-Cors >=5.0.0
-python-dotenv # dev dependency
+# ==============================================================================
+# Python Dependencies - Portfolio Application
+# ==============================================================================
 
-#* WSGI
-gunicorn
+# Web Framework
+Flask>=3.0.0
+Flask-Cors>=5.0.0
+Werkzeug>=3.0.0
 
-#* DB
+# WSGI Server (production)
+gunicorn>=21.0.0
+
+# Database
 pymongo>=4.10.1
 
-#* Google OAuth
-Flask-OAuthlib>=0.9.6
+# Google OAuth
 google-auth>=2.35.0
 google-auth-oauthlib>=1.2.1
+
+# Environment Variables (development)
+python-dotenv>=1.0.0
+
