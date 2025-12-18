@@ -34,27 +34,27 @@ class MongoDB:
     _client: Optional[MongoClient] = None
     _db: Optional[Database] = None
     _initialized: bool = False
-    
+
     def __init__(self, collection_name: str):
         self._collection_name = collection_name
         self._collection = None
-    
+
     @classmethod
     def _ensure_connection(cls):
         """Lazy initialization of MongoDB connection - only connects when first needed."""
         if cls._initialized:
             return
-        
+
         mongo_url = _get_env_var("MONGO_URL")
         mongo_db_name = _get_env_var("MONGO_DB_NAME")
-        
+
         cls._client = MongoClient(
-            mongo_url, 
+            mongo_url,
             server_api=ServerApi('1'),
             serverSelectionTimeoutMS=5000,  # 5 second timeout for server selection
             connectTimeoutMS=5000,  # 5 second connection timeout
         )
-        
+
         try:
             cls._client.admin.command('ping')
             logging.info("Successfully connected to MongoDB!")
@@ -62,20 +62,20 @@ class MongoDB:
             logging.error("Failed to connect to MongoDB")
             logging.error(e)
             raise
-        
+
         cls._db = cls._client[mongo_db_name]
         cls._initialized = True
-    
+
     @property
     def client(self):
         MongoDB._ensure_connection()
         return MongoDB._client
-    
+
     @property
     def db(self):
         MongoDB._ensure_connection()
         return MongoDB._db
-    
+
     @property
     def collection(self):
         if self._collection is None:

@@ -57,3 +57,4 @@ htmlcov/
 
 # Others
 deploy-test.yml
+app/server/nginx/
