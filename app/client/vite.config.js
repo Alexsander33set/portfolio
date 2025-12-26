@@ -27,4 +27,16 @@ export default defineConfig({
   build: {
     outDir: '../server/template',
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8011',
+        changeOrigin: true,
+      },
+      '/auth': {
+        target: 'http://localhost:8011',
+        changeOrigin: true,
+      },
+    },
+  },
 })

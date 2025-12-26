@@ -33,7 +33,7 @@ export const pt_br = {
   presentation: {
     im: "Eu sou",
     subtitle: 'Desenvolvedor de Software',
-    description: 'Sou um desenvolvedor de software com paixão por criar soluções inovadoras. Tenho um forte interesse em desenvolvimento web e estou sempre buscando novos desafios.'
+    description: 'Sou um programador com mais de 3 anos de experiência no desenvolvimento de aplicações em todos seus estágios, deis de sua idealização, até seu encerramento.'
   },
   skills:{
     title: "O que você precisa?",

@@ -6,3 +6,13 @@ authors = [
 ]
 version = "0.1"
 readme = "README.md"
+dependencies = [
+"Flask>=3.0.0",
+"Flask-Cors>=5.0.0",
+"Werkzeug>=3.0.0",
+"gunicorn>=21.0.0",
+"pymongo>=4.10.1",
+"google-auth>=2.35.0",
+"google-auth-oauthlib>=1.2.1",
+"python-dotenv>=1.0.0"
+]

@@ -33,7 +33,7 @@ export const en_us = {
   presentation: {
     im: "I'm",
     subtitle: 'Software Developer',
-    description: 'I am a software developer with a passion for creating innovative solutions. I have a strong interest in web development and I am always looking for new challenges.'
+    description: 'I am a programmer with over 3 years of experience in developing applications at all stages, from their conceptualization to their completion.'
   },
   skills:{
     title: "What your need?",
