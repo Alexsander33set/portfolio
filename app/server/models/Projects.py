@@ -81,6 +81,8 @@ class Projects(MongoDB):
         if isinstance(assets, dict) and assets.get(asset_name):
             return assets.get(asset_name)
 
+        # Backward compatibility for existing project documents while the
+        # canonical storage shape is migrated to the generic `assets` object.
         legacy_fields = {
             'preview': project.get('preview_image') or project.get('image'),
             'details': project.get('details') or project.get('description_asset'),

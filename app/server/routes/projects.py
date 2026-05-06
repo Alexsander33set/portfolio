@@ -24,7 +24,7 @@ def get_project_route(project_id):
   if not project:
     return jsonify({"error":"project not found"}), 404
 
-  logging.info(project)
+  logging.info("Project returned for id=%s", project.get('_id'))
   return jsonify(project)
 
 @projects.route('/api/add-project', methods=['POST'])

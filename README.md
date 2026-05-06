@@ -139,3 +139,4 @@ Projects can now reference files stored in a public bucket (such as Cloudflare R
 - `assets.details.storage_key` is exposed as `details.url`
 - when the details asset is a public text file, the backend uses it as the project `description`
 - existing direct URLs in `image` or `preview_image.url` still work as fallback
+- project descriptions are rendered as plain text in the list UI to avoid injecting stored HTML
