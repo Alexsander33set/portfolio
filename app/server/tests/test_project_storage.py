@@ -1,3 +1,4 @@
+import json
 import unittest
 from io import BytesIO
 from unittest.mock import Mock
@@ -132,6 +133,28 @@ class ProjectSerializationTests(unittest.TestCase):
             'https://signed.example.com/details',
         )
         self.assertEqual(serialized_project['description'], 'Stored in MongoDB')
+        self.projects.storage.read_text.assert_not_called()
+
+    def test_get_projects_serializes_list_without_loading_details_content(self):
+        self.projects.find_all = Mock(return_value=[self.project_document])
+        self.projects.storage.resolve_asset.side_effect = [
+            {
+                'storage_key': 'projects/portfolio/preview.webp',
+                'url': 'https://signed.example.com/preview',
+                'alt': 'Portfolio preview',
+            },
+            {
+                'storage_key': 'projects/portfolio/details.md',
+                'url': 'https://signed.example.com/details',
+            },
+        ]
+
+        serialized_projects = json.loads(self.projects.get_projects())
+
+        self.assertEqual(len(serialized_projects), 1)
+        self.assertEqual(serialized_projects[0]['image'], 'https://signed.example.com/preview')
+        self.assertEqual(serialized_projects[0]['details']['url'], 'https://signed.example.com/details')
+        self.assertEqual(serialized_projects[0]['description'], 'Stored in MongoDB')
         self.projects.storage.read_text.assert_not_called()
 
     def test_serialize_project_reads_private_details_for_single_project(self):

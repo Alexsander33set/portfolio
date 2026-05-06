@@ -48,6 +48,21 @@ const filter = {
 "railway": "devicon:railway",
 "mongodb": "devicon:mongodb"
 }
+
+const getProjectPreviewText = (description) => {
+  if (!description) {
+    return ''
+  }
+
+  return String(description)
+    .replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/[*_~`>]+/g, '')
+    .replace(/\n+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
 </script>
 
 <template>
@@ -69,7 +84,7 @@ const filter = {
               {{ project.name }}
             </h3>
             <p class="mt-2 whitespace-pre-wrap line-clamp-2">
-              {{ project.description }}
+              {{ getProjectPreviewText(project.description) }}
             </p>
             <div class="flex gap-2 mt-2">
               <Badge class="capitalize leading-normal inline-flex gap-2"

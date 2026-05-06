@@ -17,6 +17,18 @@ DEFAULT_SIGNED_URL_TTL = 3600
 MAX_TEXT_BYTES = 256 * 1024
 
 
+def _parse_signed_url_ttl(raw_value: Any) -> int:
+    try:
+        return int(raw_value)
+    except (TypeError, ValueError):
+        logger.warning(
+            "Invalid STORAGE_SIGNED_URL_TTL value %r. Falling back to %s seconds.",
+            raw_value,
+            DEFAULT_SIGNED_URL_TTL,
+        )
+        return DEFAULT_SIGNED_URL_TTL
+
+
 class ObjectStorageConnector:
     """Generic S3-compatible object storage connector."""
 
@@ -37,7 +49,9 @@ class ObjectStorageConnector:
         self.access_key_id = (access_key_id or os.getenv('STORAGE_ACCESS_KEY_ID', '')).strip()
         self.secret_access_key = (secret_access_key or os.getenv('STORAGE_SECRET_ACCESS_KEY', '')).strip()
         self.region_name = (region_name or os.getenv('STORAGE_REGION', 'auto')).strip() or 'auto'
-        self.signed_url_ttl = int(os.getenv('STORAGE_SIGNED_URL_TTL', signed_url_ttl or DEFAULT_SIGNED_URL_TTL))
+        self.signed_url_ttl = _parse_signed_url_ttl(
+            os.getenv('STORAGE_SIGNED_URL_TTL', signed_url_ttl or DEFAULT_SIGNED_URL_TTL)
+        )
         self.timeout = timeout
         self.max_text_bytes = max_text_bytes
         self._client = client
