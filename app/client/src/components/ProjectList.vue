@@ -54,6 +54,7 @@ const getProjectPreviewText = (description) => {
     return ''
   }
 
+  // Keep the card preview lightweight by stripping only the most common markdown markers.
   return String(description)
     .replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
@@ -76,7 +77,7 @@ const getProjectPreviewText = (description) => {
           <div>
             <!-- <Skeleton id="getthis" class="h-[180px] w-[220px]"/> -->
             <img class="object-cover h-[180px] w-[220px]"
-               :src=" project.image || '/no-image.png'"
+               :src="project.image || '/no-image.png'"
                :alt="project.preview_image?.alt || project.name">
            </div>
           <div class="flex-1">
