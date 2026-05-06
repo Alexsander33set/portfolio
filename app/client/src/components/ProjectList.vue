@@ -48,6 +48,34 @@ const filter = {
 "railway": "devicon:railway",
 "mongodb": "devicon:mongodb"
 }
+
+const MARKDOWN_IMAGE_PATTERN = /!\[([^\]]*)\]\([^)]+\)/g
+const MARKDOWN_LINK_PATTERN = /\[([^\]]+)\]\([^)]+\)/g
+const MARKDOWN_HEADING_PATTERN = /^#{1,6}\s+/gm
+const MARKDOWN_DECORATOR_PATTERN = /[*_~`>]+/g
+const MULTI_NEWLINE_PATTERN = /\n+/g
+const MULTI_SPACE_PATTERN = /\s+/g
+
+/**
+ * Convert common markdown formatting into lightweight plain text for card previews.
+ * @param {string|null|undefined} description
+ * @returns {string}
+ */
+const stripMarkdownForPreview = (description) => {
+  if (!description) {
+    return ''
+  }
+
+  // Keep the card preview lightweight by stripping only the most common markdown markers.
+  return String(description)
+    .replace(MARKDOWN_IMAGE_PATTERN, '$1')
+    .replace(MARKDOWN_LINK_PATTERN, '$1')
+    .replace(MARKDOWN_HEADING_PATTERN, '')
+    .replace(MARKDOWN_DECORATOR_PATTERN, '')
+    .replace(MULTI_NEWLINE_PATTERN, ' ')
+    .replace(MULTI_SPACE_PATTERN, ' ')
+    .trim()
+}
 </script>
 
 <template>
@@ -61,15 +89,15 @@ const filter = {
           <div>
             <!-- <Skeleton id="getthis" class="h-[180px] w-[220px]"/> -->
             <img class="object-cover h-[180px] w-[220px]"
-              :src=" project.image || '/no-image.png'"
-              alt="">
-          </div>
+               :src="project.image || '/no-image.png'"
+               :alt="project.preview_image?.alt || project.name">
+           </div>
           <div class="flex-1">
             <h3 class="text-lg capitalize">
               {{ project.name }}
             </h3>
-            <p class="mt-2 whitespace-pre-wrap line-clamp-2"
-              v-html="project.description">
+            <p class="mt-2 whitespace-pre-wrap line-clamp-2">
+              {{ stripMarkdownForPreview(project.description) }}
             </p>
             <div class="flex gap-2 mt-2">
               <Badge class="capitalize leading-normal inline-flex gap-2"

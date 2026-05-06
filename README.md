@@ -106,3 +106,53 @@ The following tools were used in the construction of the project:
 - `POST   /api/add-project`: Adds a new project
 - `PUT    /api/update-project/<project_id>`: Updates a specific project
 - `DELETE /api/delete-project/<project_id>`: Deletes a specific project
+
+## 🗂 Private object storage for project assets
+
+Projects can now reference files stored in a private S3-compatible bucket (such as a private Cloudflare R2 bucket) instead of keeping large preview/detail assets on the VPS.
+
+### Environment variables
+
+- `STORAGE_BUCKET_NAME`: bucket name
+- `STORAGE_ENDPOINT_URL`: S3-compatible endpoint URL (Cloudflare R2 example: `https://<account-id>.r2.cloudflarestorage.com`)
+- `STORAGE_ACCESS_KEY_ID`: storage access key
+- `STORAGE_SECRET_ACCESS_KEY`: storage secret key
+- `STORAGE_REGION`: region name (`auto` for Cloudflare R2)
+- `STORAGE_SIGNED_URL_TTL`: signed URL lifetime in seconds
+
+### Recommended project document shape
+
+```json
+{
+  "name": "My Project",
+  "description": "Fallback description kept in MongoDB",
+  "assets": {
+    "preview": {
+      "storage_key": "projects/my-project/preview.webp",
+      "alt": "My Project preview"
+    },
+    "details": {
+      "storage_key": "projects/my-project/details.md"
+    }
+  }
+}
+```
+
+### API behavior
+
+- `assets.preview.storage_key` is resolved into a signed `preview_image.url` and legacy `image`
+- `assets.details.storage_key` is exposed as a signed `details.url`
+- when the details asset is a private text file, the backend reads it directly from the bucket and uses it as the project `description`
+- existing direct URLs in `image` or `preview_image.url` still work as fallback
+- project descriptions are rendered as plain text in the list UI to avoid injecting stored HTML
+
+### Generic storage connector methods
+
+The backend storage connector now exposes reusable methods for future admin flows:
+
+- `upload_object(...)`
+- `upload_text(...)`
+- `update_object(...)`
+- `delete_object(...)`
+- `read_text(...)`
+- `resolve_asset(...)`
