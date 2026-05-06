@@ -29,6 +29,10 @@ def _parse_signed_url_ttl(raw_value: Any) -> int:
         return DEFAULT_SIGNED_URL_TTL
 
 
+class StorageConfigurationError(EnvironmentError):
+    """Raised when object storage credentials are required but missing."""
+
+
 class ObjectStorageConnector:
     """Generic S3-compatible object storage connector."""
 
@@ -232,7 +236,7 @@ class ObjectStorageConnector:
 
     def _require_client(self):
         if not self.is_configured():
-            raise EnvironmentError(
+            raise StorageConfigurationError(
                 'Private object storage is not configured. '
                 'Set STORAGE_BUCKET_NAME, STORAGE_ENDPOINT_URL, '
                 'STORAGE_ACCESS_KEY_ID, and STORAGE_SECRET_ACCESS_KEY.'

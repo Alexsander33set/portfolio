@@ -56,6 +56,11 @@ const MARKDOWN_DECORATOR_PATTERN = /[*_~`>]+/g
 const MULTI_NEWLINE_PATTERN = /\n+/g
 const MULTI_SPACE_PATTERN = /\s+/g
 
+/**
+ * Convert common markdown formatting into lightweight plain text for card previews.
+ * @param {string} description
+ * @returns {string}
+ */
 const stripMarkdownForPreview = (description) => {
   if (!description) {
     return ''
