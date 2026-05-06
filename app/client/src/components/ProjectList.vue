@@ -58,7 +58,7 @@ const MULTI_SPACE_PATTERN = /\s+/g
 
 /**
  * Convert common markdown formatting into lightweight plain text for card previews.
- * @param {string} description
+ * @param {string|null|undefined} description
  * @returns {string}
  */
 const stripMarkdownForPreview = (description) => {

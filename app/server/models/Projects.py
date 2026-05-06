@@ -3,8 +3,8 @@ import logging
 from flask import json
 from models.Mongo import MongoDB
 
-from bson.objectid import ObjectId
 from bson.errors import InvalidId
+from bson.objectid import ObjectId
 from utils.storage import ObjectStorageConnector
 
 class Projects(MongoDB):
@@ -92,8 +92,8 @@ class Projects(MongoDB):
 
         # Backward compatibility for documents that still store preview/details
         # references in legacy fields instead of the generic `assets` object.
-        # This fallback can be removed after persisted project documents are
-        # migrated away from `image`, `preview_image`, and `description_asset`.
+        # TODO(2026-Q2): Remove this fallback after persisted project documents
+        # are migrated away from `image`, `preview_image`, and `description_asset`.
         legacy_fields = {
             'preview': project.get('preview_image') or project.get('image'),
             'details': project.get('details') or project.get('description_asset'),
