@@ -71,7 +71,7 @@ class PublicStorageConnector:
 
                 charset = response.headers.get_content_charset() or 'utf-8'
                 return raw_content.decode(charset)
-        except (HTTPError, URLError, TimeoutError, UnicodeDecodeError) as error:
+        except (HTTPError, URLError, UnicodeDecodeError) as error:
             logger.warning("Failed to read public storage asset %s: %s", public_url, error)
             return None
 
