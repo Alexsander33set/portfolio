@@ -9,6 +9,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        VITE_PLAUSIBLE_ENDPOINT: ${VITE_PLAUSIBLE_ENDPOINT:-}
+        VITE_PLAUSIBLE_DOMAIN: ${VITE_PLAUSIBLE_DOMAIN:-}
     container_name: portfolio-app
     restart: unless-stopped
     ports:
@@ -28,6 +31,10 @@ services:
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
       - OAUTHLIB_INSECURE_TRANSPORT=${OAUTHLIB_INSECURE_TRANSPORT:-0}
+
+      # Frontend analytics (consumed during the Docker build via build.args)
+      - VITE_PLAUSIBLE_ENDPOINT=${VITE_PLAUSIBLE_ENDPOINT:-}
+      - VITE_PLAUSIBLE_DOMAIN=${VITE_PLAUSIBLE_DOMAIN:-}
 
     # Security options
     security_opt:

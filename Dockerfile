@@ -11,6 +11,12 @@ FROM node:22-alpine AS frontend-builder
 
 WORKDIR /build
 
+ARG VITE_PLAUSIBLE_ENDPOINT
+ARG VITE_PLAUSIBLE_DOMAIN
+
+ENV VITE_PLAUSIBLE_ENDPOINT=${VITE_PLAUSIBLE_ENDPOINT} \
+    VITE_PLAUSIBLE_DOMAIN=${VITE_PLAUSIBLE_DOMAIN}
+
 # Copy package files first for better caching
 COPY app/client/package*.json ./
 
