@@ -17,6 +17,9 @@
 *.swp
 *.swo
 
+# MCP
+.playwright-mcp
+
 # Virtual Environment
 node_modules
 venv
