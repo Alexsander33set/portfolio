@@ -239,23 +239,23 @@ class ObjectStorageConnector:
             )
         return self.client
 
-    def _read_text_from_url(self, public_url: str) -> Optional[str]:
+    def _read_text_from_url(self, url: str) -> Optional[str]:
         try:
-            with urlopen(public_url, timeout=self.timeout) as response:
+            with urlopen(url, timeout=self.timeout) as response:
                 content_type = response.headers.get_content_type()
                 if content_type and not content_type.startswith('text/'):
-                    logger.warning("Skipping non-text storage asset URL: %s", public_url)
+                    logger.warning("Skipping non-text storage asset URL: %s", url)
                     return None
 
                 raw_content = response.read(self.max_text_bytes + 1)
                 if len(raw_content) > self.max_text_bytes:
-                    logger.warning("Skipping oversized text asset URL: %s", public_url)
+                    logger.warning("Skipping oversized text asset URL: %s", url)
                     return None
 
                 charset = response.headers.get_content_charset() or 'utf-8'
                 return raw_content.decode(charset)
         except (HTTPError, URLError, UnicodeDecodeError) as error:
-            logger.warning("Failed to read storage asset URL %s: %s", public_url, error)
+            logger.warning("Failed to read storage asset URL %s: %s", url, error)
             return None
 
     @staticmethod
