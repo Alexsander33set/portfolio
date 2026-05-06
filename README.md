@@ -107,13 +107,18 @@ The following tools were used in the construction of the project:
 - `PUT    /api/update-project/<project_id>`: Updates a specific project
 - `DELETE /api/delete-project/<project_id>`: Deletes a specific project
 
-## 🗂 Public file storage for project assets
+## 🗂 Private object storage for project assets
 
-Projects can now reference files stored in a public bucket (such as Cloudflare R2) instead of keeping large preview/detail assets on the VPS.
+Projects can now reference files stored in a private S3-compatible bucket (such as a private Cloudflare R2 bucket) instead of keeping large preview/detail assets on the VPS.
 
-### Environment variable
+### Environment variables
 
-- `PUBLIC_STORAGE_BASE_URL`: public base URL for the bucket/CDN (example: `https://pub-xxxxxxxx.r2.dev`)
+- `STORAGE_BUCKET_NAME`: bucket name
+- `STORAGE_ENDPOINT_URL`: S3-compatible endpoint URL (Cloudflare R2 example: `https://<account-id>.r2.cloudflarestorage.com`)
+- `STORAGE_ACCESS_KEY_ID`: storage access key
+- `STORAGE_SECRET_ACCESS_KEY`: storage secret key
+- `STORAGE_REGION`: region name (`auto` for Cloudflare R2)
+- `STORAGE_SIGNED_URL_TTL`: signed URL lifetime in seconds
 
 ### Recommended project document shape
 
@@ -135,8 +140,19 @@ Projects can now reference files stored in a public bucket (such as Cloudflare R
 
 ### API behavior
 
-- `assets.preview.storage_key` is resolved into `preview_image.url` and `image`
-- `assets.details.storage_key` is exposed as `details.url`
-- when the details asset is a public text file, the backend uses it as the project `description`
+- `assets.preview.storage_key` is resolved into a signed `preview_image.url` and legacy `image`
+- `assets.details.storage_key` is exposed as a signed `details.url`
+- when the details asset is a private text file, the backend reads it directly from the bucket and uses it as the project `description`
 - existing direct URLs in `image` or `preview_image.url` still work as fallback
 - project descriptions are rendered as plain text in the list UI to avoid injecting stored HTML
+
+### Generic storage connector methods
+
+The backend storage connector now exposes reusable methods for future admin flows:
+
+- `upload_object(...)`
+- `upload_text(...)`
+- `update_object(...)`
+- `delete_object(...)`
+- `read_text(...)`
+- `resolve_asset(...)`

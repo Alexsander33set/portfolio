@@ -1,29 +1,87 @@
 import unittest
+from io import BytesIO
 from unittest.mock import Mock
 
 from bson.objectid import ObjectId
+from botocore.exceptions import ClientError
 
 from models.Projects import Projects
-from utils.storage import PublicStorageConnector
+from utils.storage import ObjectStorageConnector
 
 
-class PublicStorageConnectorTests(unittest.TestCase):
-    def test_build_public_url_from_storage_key(self):
-        connector = PublicStorageConnector(base_url='https://assets.example.com')
-
-        public_url = connector.build_public_url('projects/my project/preview image.webp')
-
-        self.assertEqual(
-            public_url,
-            'https://assets.example.com/projects/my%20project/preview%20image.webp',
+class ObjectStorageConnectorTests(unittest.TestCase):
+    def setUp(self):
+        self.client = Mock()
+        self.client.generate_presigned_url.return_value = 'https://signed.example.com/object'
+        self.connector = ObjectStorageConnector(
+            bucket_name='portfolio-assets',
+            endpoint_url='https://example.r2.cloudflarestorage.com',
+            access_key_id='access-key',
+            secret_access_key='secret-key',
+            client=self.client,
         )
 
-    def test_build_public_url_accepts_direct_url(self):
-        connector = PublicStorageConnector(base_url='https://assets.example.com')
+    def test_build_download_url_from_storage_key(self):
+        signed_url = self.connector.build_download_url('projects/my project/preview image.webp')
 
-        public_url = connector.build_public_url('https://cdn.example.com/projects/preview.webp')
+        self.assertEqual(signed_url, 'https://signed.example.com/object')
+        self.client.generate_presigned_url.assert_called_once_with(
+            'get_object',
+            Params={
+                'Bucket': 'portfolio-assets',
+                'Key': 'projects/my project/preview image.webp',
+            },
+            ExpiresIn=3600,
+        )
 
-        self.assertEqual(public_url, 'https://cdn.example.com/projects/preview.webp')
+    def test_build_download_url_accepts_direct_url(self):
+        signed_url = self.connector.build_download_url('https://cdn.example.com/projects/preview.webp')
+
+        self.assertEqual(signed_url, 'https://cdn.example.com/projects/preview.webp')
+        self.client.generate_presigned_url.assert_not_called()
+
+    def test_read_text_uses_private_bucket_object(self):
+        self.client.get_object.return_value = {
+            'ContentType': 'text/markdown',
+            'Body': BytesIO(b'# Portfolio\n\nStored in R2'),
+        }
+
+        content = self.connector.read_text({'storage_key': 'projects/portfolio/details.md'})
+
+        self.assertEqual(content, '# Portfolio\n\nStored in R2')
+        self.client.get_object.assert_called_once_with(
+            Bucket='portfolio-assets',
+            Key='projects/portfolio/details.md',
+        )
+
+    def test_update_object_requires_existing_file(self):
+        self.client.head_object.side_effect = ClientError(
+            {'Error': {'Code': '404'}},
+            'HeadObject',
+        )
+
+        with self.assertRaises(FileNotFoundError):
+            self.connector.update_object('projects/portfolio/details.md', b'updated')
+
+    def test_upload_and_delete_object_use_private_bucket_client(self):
+        uploaded_asset = self.connector.upload_object(
+            storage_key='projects/portfolio/preview.webp',
+            body=b'preview-bytes',
+            content_type='image/webp',
+            metadata={'alt': 'Portfolio preview'},
+        )
+
+        self.assertEqual(uploaded_asset['storage_key'], 'projects/portfolio/preview.webp')
+        self.assertEqual(uploaded_asset['url'], 'https://signed.example.com/object')
+        self.client.put_object.assert_called_once()
+
+        deleted = self.connector.delete_object('projects/portfolio/preview.webp')
+
+        self.assertTrue(deleted)
+        self.client.delete_object.assert_called_once_with(
+            Bucket='portfolio-assets',
+            Key='projects/portfolio/preview.webp',
+        )
 
 
 class ProjectSerializationTests(unittest.TestCase):
@@ -50,12 +108,12 @@ class ProjectSerializationTests(unittest.TestCase):
         self.projects.storage.resolve_asset.side_effect = [
             {
                 'storage_key': 'projects/portfolio/preview.webp',
-                'url': 'https://assets.example.com/projects/portfolio/preview.webp',
+                'url': 'https://signed.example.com/preview',
                 'alt': 'Portfolio preview',
             },
             {
                 'storage_key': 'projects/portfolio/details.md',
-                'url': 'https://assets.example.com/projects/portfolio/details.md',
+                'url': 'https://signed.example.com/details',
             },
         ]
 
@@ -67,25 +125,25 @@ class ProjectSerializationTests(unittest.TestCase):
         self.assertEqual(serialized_project['_id'], str(self.project_id))
         self.assertEqual(
             serialized_project['image'],
-            'https://assets.example.com/projects/portfolio/preview.webp',
+            'https://signed.example.com/preview',
         )
         self.assertEqual(
             serialized_project['details']['url'],
-            'https://assets.example.com/projects/portfolio/details.md',
+            'https://signed.example.com/details',
         )
         self.assertEqual(serialized_project['description'], 'Stored in MongoDB')
         self.projects.storage.read_text.assert_not_called()
 
-    def test_serialize_project_reads_public_details_for_single_project(self):
+    def test_serialize_project_reads_private_details_for_single_project(self):
         self.projects.storage.resolve_asset.side_effect = [
             {
                 'storage_key': 'projects/portfolio/preview.webp',
-                'url': 'https://assets.example.com/projects/portfolio/preview.webp',
+                'url': 'https://signed.example.com/preview',
                 'alt': 'Portfolio preview',
             },
             {
                 'storage_key': 'projects/portfolio/details.md',
-                'url': 'https://assets.example.com/projects/portfolio/details.md',
+                'url': 'https://signed.example.com/details',
             },
         ]
         self.projects.storage.read_text.return_value = '# Portfolio\n\nStored in R2'

@@ -5,19 +5,23 @@ from models.Mongo import MongoDB
 
 from bson.objectid import ObjectId
 from bson.errors import InvalidId
-from utils.storage import PublicStorageConnector
+from utils.storage import ObjectStorageConnector
 
 class Projects(MongoDB):
     def __init__(self):
         # Connects to the database and "projects" collection
         super().__init__(collection_name="projects")
-        self.storage = PublicStorageConnector()
+        self.storage = ObjectStorageConnector()
 
     def get_projects(self):
         logging.debug(" >>=====  Get projects called =====<<")
         projects = self.find_all()
 
-        return json.dumps([self.serialize_project(project, include_details_content=False) for project in projects])
+        serialized_projects = [
+            self.serialize_project(project, include_details_content=False)
+            for project in projects
+        ]
+        return json.dumps(serialized_projects)
 
     def get_project(self, slug):
         logging.info(" >>=====  Get Project called =====<<")
@@ -60,16 +64,21 @@ class Projects(MongoDB):
         serialized_project = dict(project)
         serialized_project['_id'] = str(serialized_project['_id'])
 
-        preview_asset = self.storage.resolve_asset(self._get_asset_reference(serialized_project, 'preview'))
-        if preview_asset:
-            serialized_project['preview_image'] = preview_asset
-            serialized_project['image'] = preview_asset['url']
+        preview_image_asset = self.storage.resolve_asset(
+            self._get_asset_reference(serialized_project, 'preview')
+        )
+        if preview_image_asset:
+            serialized_project['preview_image'] = preview_image_asset
+            if preview_image_asset.get('url'):
+                serialized_project['image'] = preview_image_asset['url']
 
-        details_asset = self.storage.resolve_asset(self._get_asset_reference(serialized_project, 'details'))
-        if details_asset:
-            serialized_project['details'] = details_asset
+        resolved_details = self.storage.resolve_asset(
+            self._get_asset_reference(serialized_project, 'details')
+        )
+        if resolved_details:
+            serialized_project['details'] = resolved_details
             if include_details_content:
-                storage_description = self.storage.read_text(details_asset)
+                storage_description = self.storage.read_text(resolved_details)
                 if storage_description:
                     serialized_project['description'] = storage_description
 
