@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@plausible-analytics/tracker": "^0.4.5",
     "@radix-icons/vue": "^1.0.0",
     "@vueuse/core": "^12.2.0",
     "axios": "^1.12.0",
