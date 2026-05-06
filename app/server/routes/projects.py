@@ -21,8 +21,11 @@ def get_project_route(project_id):
     return jsonify({"error":"project not defined"}), 400
 
   project = projects_service.get_project_by_id(project_id)
+  if not project:
+    return jsonify({"error":"project not found"}), 404
+
   logging.info(project)
-  return Response(project, mimetype='application/json')
+  return jsonify(project)
 
 @projects.route('/api/add-project', methods=['POST'])
 @login_required

@@ -61,15 +61,15 @@ const filter = {
           <div>
             <!-- <Skeleton id="getthis" class="h-[180px] w-[220px]"/> -->
             <img class="object-cover h-[180px] w-[220px]"
-              :src=" project.image || '/no-image.png'"
-              alt="">
-          </div>
+               :src=" project.image || '/no-image.png'"
+               :alt="project.preview_image?.alt || project.name">
+           </div>
           <div class="flex-1">
             <h3 class="text-lg capitalize">
               {{ project.name }}
             </h3>
-            <p class="mt-2 whitespace-pre-wrap line-clamp-2"
-              v-html="project.description">
+            <p class="mt-2 whitespace-pre-wrap line-clamp-2">
+              {{ project.description }}
             </p>
             <div class="flex gap-2 mt-2">
               <Badge class="capitalize leading-normal inline-flex gap-2"

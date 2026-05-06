@@ -106,3 +106,36 @@ The following tools were used in the construction of the project:
 - `POST   /api/add-project`: Adds a new project
 - `PUT    /api/update-project/<project_id>`: Updates a specific project
 - `DELETE /api/delete-project/<project_id>`: Deletes a specific project
+
+## 🗂 Public file storage for project assets
+
+Projects can now reference files stored in a public bucket (such as Cloudflare R2) instead of keeping large preview/detail assets on the VPS.
+
+### Environment variable
+
+- `PUBLIC_STORAGE_BASE_URL`: public base URL for the bucket/CDN (example: `https://pub-xxxxxxxx.r2.dev`)
+
+### Recommended project document shape
+
+```json
+{
+  "name": "My Project",
+  "description": "Fallback description kept in MongoDB",
+  "assets": {
+    "preview": {
+      "storage_key": "projects/my-project/preview.webp",
+      "alt": "My Project preview"
+    },
+    "details": {
+      "storage_key": "projects/my-project/details.md"
+    }
+  }
+}
+```
+
+### API behavior
+
+- `assets.preview.storage_key` is resolved into `preview_image.url` and `image`
+- `assets.details.storage_key` is exposed as `details.url`
+- when the details asset is a public text file, the backend uses it as the project `description`
+- existing direct URLs in `image` or `preview_image.url` still work as fallback

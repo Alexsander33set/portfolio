@@ -88,7 +88,11 @@ const filter = {
     <template v-if="project">
       <section id="proj-presentation" class="flex gap-6 pt-6">
         <div id="proj-image" class="rounded-lg overflow-hidden shadow-md">
-          <img class="h-[200px] w-[300px]" src="/no-image.png" alt="example" />
+          <img
+            class="h-[200px] w-[300px] object-cover"
+            :src="project.image || '/no-image.png'"
+            :alt="project.preview_image?.alt || project.name"
+          />
         </div>
         <div id="proj-main-text">
           <div id="proj-title-&-privace" class="inline-flex gap-4">
